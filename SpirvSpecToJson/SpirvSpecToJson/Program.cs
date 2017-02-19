@@ -29,7 +29,7 @@ namespace SpirvSpecToJson
             const string cacheFileExtOpenCL12 = "spirvExtOpenCL12.html";
             const string cacheFileExtOpenCL20 = "spirvExtOpenCL20.html";
             const string cacheFileExtOpenCL21 = "spirvExtOpenCL21.html";
-            const string jsonFile = "spirv.json";
+            const string jsonFile = "generated/spirv.json";
 
 
             var dic = new Dictionary<string, string>
@@ -233,8 +233,16 @@ namespace SpirvSpecToJson
                                 else if (td.InnerHtml.Contains("<a href="))
                                 {
                                     var a = text.GetLinkedNameAndType(true, true);
-                                    operand["Name"] = a[0].Replace(".", "");
-                                    operand["Type"] = a[1];
+                                    if(a[0] == null)
+                                    {
+                                        operand["Name"] = "<null>";
+                                        operand["Type"] = "<null>";
+                                    }
+                                    else
+                                    {
+                                        operand["Name"] = a[0].Replace(".", "");
+                                        operand["Type"] = a[1];
+                                    }
                                     operands.Add(operand);
                                 }
                                 // Optionals
@@ -285,6 +293,8 @@ namespace SpirvSpecToJson
 
                         var parent = node.ParentNode;
                         var table = parent.LastChild.PreviousSibling;
+                        if (table.LastChild == null)
+                            continue; // FIXME
                         var tbody = table.LastChild.PreviousSibling;
 
                         // data that needs to be safed
@@ -347,7 +357,14 @@ namespace SpirvSpecToJson
                                     else
                                     {
                                         // Value
-                                        valueObj["Value"] = int.Parse(td.InnerText);
+                                        if (td.InnerText.StartsWith("0x"))
+                                        {
+                                            valueObj["Value"] = int.Parse(td.InnerText.Substring(2), System.Globalization.NumberStyles.AllowHexSpecifier);
+                                        }
+                                        else
+                                        {
+                                            valueObj["Value"] = int.Parse(td.InnerText);
+                                        }
                                     }
 
 
@@ -402,7 +419,16 @@ namespace SpirvSpecToJson
                                     {
                                         // Value
                                         if (!string.IsNullOrEmpty(td.InnerText))
-                                            valueObj["Value"] = int.Parse(td.InnerText);
+                                        {
+                                            if (td.InnerText.StartsWith("0x"))
+                                            {
+                                                valueObj["Value"] = int.Parse(td.InnerText.Substring(2), System.Globalization.NumberStyles.AllowHexSpecifier);
+                                            }
+                                            else
+                                            {
+                                                valueObj["Value"] = int.Parse(td.InnerText);
+                                            }
+                                        }
                                     }
 
                                 }
@@ -1269,6 +1295,7 @@ namespace SpirvSpecToJson
 
             // save json
             Console.WriteLine("Writing result json");
+            System.IO.Directory.CreateDirectory("generated");
             File.WriteAllText(jsonFile, specJson.ToString(Formatting.Indented));
         }
     }
