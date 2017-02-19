@@ -19,7 +19,7 @@ namespace SpirvSpecToJson
     {
         private static void Main(string[] args)
         {
-            const string specUrl = @"https://www.khronos.org/registry/spir-v/specs/1.0/SPIRV.html";
+            const string specUrl = @"https://www.khronos.org/registry/spir-v/specs/1.1/SPIRV.html";
             const string specExtUrlGLSL = @"https://www.khronos.org/registry/spir-v/specs/1.0/GLSL.std.450.html";
             const string specExtUrlOpenCL12 = @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.12.html";
             const string specExtUrlOpenCL20 = @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.20.html";
@@ -29,7 +29,8 @@ namespace SpirvSpecToJson
             const string cacheFileExtOpenCL12 = "generated/spirvExtOpenCL12.html";
             const string cacheFileExtOpenCL20 = "generated/spirvExtOpenCL20.html";
             const string cacheFileExtOpenCL21 = "generated/spirvExtOpenCL21.html";
-            const string jsonFile = "generated/spirv.json";
+            const string fatJsonFile = "generated/spirv-fat.json";
+            const string opcodesJsonFile = "generated/spirv-opcodesonly.json";
 
 
             var dic = new Dictionary<string, string>
@@ -176,6 +177,10 @@ namespace SpirvSpecToJson
 
                             // opcode NR
                             var opcodeNr = int.Parse(tds[1].InnerText.Trim());
+                            opJson["WordCount"] = wc;
+                            opJson["WordCountFix"] = int.Parse(wc.Replace(" + variable", "").Trim());
+                            opJson["OpCode"] = opcodeNr;
+                            opJson["HasVariableWordCount"] = isVariableWC;
 
                             // operands
                             var operands = new JArray();
@@ -185,11 +190,6 @@ namespace SpirvSpecToJson
                                 var td = tds[i];
                                 var text = WebUtility.HtmlDecode(td.InnerText);
                                 var operand = new JObject();
-
-                                opJson["WordCount"] = wc;
-                                opJson["WordCountFix"] = int.Parse(wc.Replace(" + variable", "").Trim());
-                                opJson["OpCode"] = opcodeNr;
-                                opJson["HasVariableWordCount"] = isVariableWC;
 
 
                                 // Result
@@ -265,6 +265,8 @@ namespace SpirvSpecToJson
 
                         specJson["OpCodes"] = opcodeJson;
                     }
+                    Console.WriteLine("Writing opcodes-only json");
+                    File.WriteAllText(opcodesJsonFile, opcodeJson.ToString(Formatting.Indented));
                 }
 
                 #endregion  
@@ -1295,8 +1297,8 @@ namespace SpirvSpecToJson
 
 
             // save json
-            Console.WriteLine("Writing result json");
-            File.WriteAllText(jsonFile, specJson.ToString(Formatting.Indented));
+            Console.WriteLine("Writing fat SPIR-V json");
+            File.WriteAllText(fatJsonFile, specJson.ToString(Formatting.Indented));
         }
     }
 }

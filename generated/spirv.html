@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="AsciiDoc 8.6.8">
-<title>SPIR-V Specification</title>
+<title>SPIR-V Specification Provisional</title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
 
@@ -1726,9 +1726,9 @@ body {
 </head>
 <body class="article">
 <div id="header">
-<h1>SPIR-V Specification</h1>
-<span id="author">John Kessenich, Google; Boaz Ouriel, Intel</span><br>
-<span id="revnumber">version 1.00, Revision 9</span>
+<h1>SPIR-V Specification Provisional</h1>
+<span id="author">John Kessenich, Google; Boaz Ouriel, Intel; Raun Krisch, Intel</span><br>
+<span id="revnumber">version 1.1, Revision 5</span>
 </div>
 <div id="content">
 <div id="preamble">
@@ -1778,6 +1778,7 @@ product names, trademarks, and/or company names are used solely for identificati
 <div class="paragraph"><p>Kerch Holt, NVIDIA</p></div>
 <div class="paragraph"><p>Lee Howes, Qualcomm</p></div>
 <div class="paragraph"><p>Roy Ju, MediaTek</p></div>
+<div class="paragraph"><p>John Kessenich, Google</p></div>
 <div class="paragraph"><p>Daniel Koch, NVIDIA</p></div>
 <div class="paragraph"><p>Ashwin Kolhe, NVIDIA</p></div>
 <div class="paragraph"><p>Raun Krisch, Intel</p></div>
@@ -1787,6 +1788,7 @@ product names, trademarks, and/or company names are used solely for identificati
 <div class="paragraph"><p>Timothy Lottes, Epic Games</p></div>
 <div class="paragraph"><p>John McDonald, Valve</p></div>
 <div class="paragraph"><p>David Neto, Google</p></div>
+<div class="paragraph"><p>Boaz Ouriel, Intel</p></div>
 <div class="paragraph"><p>Christophe Riccio, Unity</p></div>
 <div class="paragraph"><p>Andrew Richards, Codeplay</p></div>
 <div class="paragraph"><p>Ian Romanick, Intel</p></div>
@@ -2330,6 +2332,16 @@ A sampler does not include an <a href="#ImageTerm"><em>image</em></a>.</p></div>
 <li>
 <p>
 <a href="#OpTypeForwardPointer"><strong>OpTypeForwardPointer</strong></a>
+</p>
+</li>
+<li>
+<p>
+<a href="#OpTypePipeStorage"><strong>OpTypePipeStorage</strong></a>
+</p>
+</li>
+<li>
+<p>
+<a href="#OpTypeNamedBarrier"><strong>OpTypeNamedBarrier</strong></a>
 </p>
 </li>
 </ul></div>
@@ -4716,6 +4728,36 @@ Indicates that floating-point-expressions contraction is disallowed. Only valid 
 <td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Kernel</strong></p></td>
 <td class="tableblock halign-left valign-top" colspan="3" ><p class="tableblock"></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-center valign-top" ><p class="tableblock">33</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>Initializer</strong><br>
+Indicates that this entry point is a module initializer.</p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Kernel</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="3" ><p class="tableblock"></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" ><p class="tableblock">34</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>Finalizer</strong><br>
+Indicates that this entry point is a module finalizer.</p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Kernel</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="3" ><p class="tableblock"></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" ><p class="tableblock">35</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>SubgroupSize</strong><br>
+Indicates that this entry point requires the specified <em>Subgroup Size</em>.</p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>SubgroupDispatch</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="3" ><p class="tableblock"><a href="#Literal_Number"><em>Literal Number</em></a><br>
+<em>Subgroup Size</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" ><p class="tableblock">36</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>SubgroupsPerWorkgroup</strong><br>
+Indicates that this entry point requires the specified number of <em>Subgroups Per Workgroup</em>.</p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>SubgroupDispatch</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="3" ><p class="tableblock"><a href="#Literal_Number"><em>Literal Number</em></a><br>
+<em>Subgroups Per Workgroup</em></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -5912,7 +5954,7 @@ Allow reduced precision operations. To be used as described in <a href="#Relaxed
 <td class="tableblock halign-center valign-top" ><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>SpecId</strong><br>
 Apply to a scalar specialization constant. Forms the API linkage for setting a specialized value. See <a href="#SpecializationSection">specialization</a>.</p></td>
-<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Shader</strong></p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Shader</strong>, <strong>Kernel</strong></p></td>
 <td class="tableblock halign-left valign-top" colspan="2" ><p class="tableblock"><a href="#Literal_Number"><em>Literal Number</em></a><br>
 <em>Specialization Constant ID</em></p></td>
 </tr>
@@ -6228,6 +6270,14 @@ Apply to a pointer. This declares a known minimum alignment the pointer has.</p>
 <td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Kernel</strong></p></td>
 <td class="tableblock halign-left valign-top" colspan="2" ><p class="tableblock"><a href="#Literal_Number"><em>Literal Number</em></a><br>
 <em>Alignment</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" ><p class="tableblock">45</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>MaxByteOffset</strong><br>
+Apply to a pointer. This declares a known maximum byte offset this pointer will be incremented by from the point of the decoration.  This is a guaranteed upper bound when applied to <a href="#OpFunctionParameter"><strong>OpFunctionParameter</strong></a>.</p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Addresses</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="2" ><p class="tableblock"><a href="#Literal_Number"><em>Literal Number</em></a><br>
+<em>Max Byte Offset</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -6616,6 +6666,16 @@ Strong request, to the extent possible, to unroll or unwind this loop.</p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>DontUnroll</strong><br>
 Strong request, to the extent possible, to keep this loop as a loop, without unrolling.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-center valign-middle" ><p class="tableblock">0x4</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>DependencyInfinite</strong><br>
+Guarantees that there are no dependencies between loop iterations.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-middle" ><p class="tableblock">0x8</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>DependencyLength</strong><br>
+Guarantees that there are no dependencies between a number of loop iterations,specified as a subsequent literal-number operand to the instruction.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -6769,6 +6829,11 @@ Despite being a mask and allowing multiple bits to be combined, at most one of t
 <li>
 <p>
 <a href="#OpAtomicFlagClear"><strong>OpAtomicFlagClear</strong></a>
+</p>
+</li>
+<li>
+<p>
+<a href="#OpMemoryNamedBarrier"><strong>OpMemoryNamedBarrier</strong></a>
 </p>
 </li>
 </ul></div>
@@ -7104,6 +7169,11 @@ Used by:</p></div>
 <li>
 <p>
 <a href="#OpAtomicFlagClear"><strong>OpAtomicFlagClear</strong></a>
+</p>
+</li>
+<li>
+<p>
+<a href="#OpMemoryNamedBarrier"><strong>OpMemoryNamedBarrier</strong></a>
 </p>
 </li>
 </ul></div>
@@ -7443,7 +7513,7 @@ Uses non-zero <strong>Lod</strong> <a href="#Image_Operands">Image Operands</a>.
 <tr>
 <td class="tableblock halign-center valign-middle" ><p class="tableblock">17</p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>Pipes</strong><br>
-Uses <a href="#OpTypePipe"><strong>OpTypePipe</strong></a>, <a href="#OpTypeReserveId"><strong>OpTypeReserveId</strong></a>, or <a href="#Pipe"><em>pipe</em></a> instructions.</p></td>
+Uses <a href="#OpTypePipe"><strong>OpTypePipe</strong></a>, <a href="#OpTypeReserveId"><strong>OpTypeReserveId</strong></a> or <a href="#Pipe"><em>pipe</em></a> instructions.</p></td>
 <td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Kernel</strong></p></td>
 <td class="tableblock halign-center valign-top" ><p class="tableblock"></p></td>
 </tr>
@@ -7721,6 +7791,27 @@ Multiple viewports are used.</p></td>
 <td class="tableblock halign-center valign-top" ><p class="tableblock"></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-center valign-middle" ><p class="tableblock">58</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>SubgroupDispatch</strong><br>
+Uses subgroup dispatch instructions.</p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>DeviceEnqueue</strong></p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-middle" ><p class="tableblock">59</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>NamedBarrier</strong><br>
+Uses <a href="#OpTypeNamedBarrier"><strong>OpTypeNamedBarrier</strong></a>.</p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Kernel</strong></p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-middle" ><p class="tableblock">60</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>PipeStorage</strong><br>
+Uses <a href="#OpTypePipeStorage"><strong>OpTypePipeStorage</strong></a>.</p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"><strong>Pipes</strong></p></td>
+<td class="tableblock halign-center valign-top" ><p class="tableblock"></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-center valign-middle" ><p class="tableblock">4423</p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><strong>SubgroupBallotKHR</strong></p></td>
 <td class="tableblock halign-center valign-top" ><p class="tableblock"></p></td>
@@ -7821,6 +7912,38 @@ Each consumption of <em>Result &lt;id&gt;</em> yields an arbitrary, possibly dif
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
 <em>Result Type</em></p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#ResultId"><em>Result &lt;id&gt;</em></a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all"
+style="
+width:74%;
+">
+<col style="width:9%;">
+<col style="width:9%;">
+<col style="width:27%;">
+<col style="width:27%;">
+<col style="width:27%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="4" ><p class="tableblock"><a id="OpSizeOf"></a><strong>OpSizeOf</strong><br>
+<br>
+Computes the run-time size of the type pointed to by <em>Pointer</em><br>
+<br>
+<em>Result Type</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar.<br>
+<br>
+<em>Pointer</em> must point to a concrete type.</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Capability">Capability</a>:<br>
+<strong>Addresses</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">321</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Result Type</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#ResultId"><em>Result &lt;id&gt;</em></a></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Pointer</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -8064,6 +8187,29 @@ This instruction can only appear after the <a href="#Annotation">annotation</a> 
 <tr>
 <td class="tableblock halign-left valign-top" ><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock">317</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all"
+style="
+width:84%;
+">
+<col style="width:42%;">
+<col style="width:14%;">
+<col style="width:42%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="3" ><p class="tableblock"><a id="OpModuleProcessed"></a><strong>OpModuleProcessed</strong><br>
+<br>
+Document a process that was applied to a module. This has no semantic impact and can safely be removed from a module.<br>
+<br>
+<em>Process</em> is a string describing a process and/or tool (processor) that did the processing. Its form is dependent on the processor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">2 + variable</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">330</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Literal_String"><em>Literal String</em></a><br>
+<em>Process</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -9043,6 +9189,50 @@ Declare the Storage Class for a forward reference to a pointer.<br>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
 <em>Pointer Type</em></p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Storage_Class"><em>Storage Class</em></a><br></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all"
+style="
+width:60%;
+">
+<col style="width:20%;">
+<col style="width:20%;">
+<col style="width:60%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2" ><p class="tableblock"><a id="OpTypePipeStorage"></a><strong>OpTypePipeStorage</strong><br>
+<br>
+Declare the OpenCL pipe-storage type.</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Capability">Capability</a>:<br>
+<strong>PipeStorage</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">322</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#ResultId"><em>Result &lt;id&gt;</em></a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all"
+style="
+width:60%;
+">
+<col style="width:20%;">
+<col style="width:20%;">
+<col style="width:60%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2" ><p class="tableblock"><a id="OpTypeNamedBarrier"></a><strong>OpTypeNamedBarrier</strong><br>
+<br>
+Declare the named-barrier type.</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Capability">Capability</a>:<br>
+<strong>NamedBarrier</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">327</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#ResultId"><em>Result &lt;id&gt;</em></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -15499,14 +15689,15 @@ Within a block, this instruction must appear before all non-<strong>OpPhi</stron
 style="
 width:100%;
 ">
-<col style="width:9%;">
-<col style="width:9%;">
-<col style="width:27%;">
-<col style="width:27%;">
-<col style="width:27%;">
+<col style="width:18%;">
+<col style="width:6%;">
+<col style="width:18%;">
+<col style="width:18%;">
+<col style="width:18%;">
+<col style="width:18%;">
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" colspan="5" ><p class="tableblock"><a id="OpLoopMerge"></a><strong>OpLoopMerge</strong><br>
+<td class="tableblock halign-left valign-top" colspan="6" ><p class="tableblock"><a id="OpLoopMerge"></a><strong>OpLoopMerge</strong><br>
 <br>
 Declare a structured loop.<br>
 <br>
@@ -15516,16 +15707,20 @@ This instruction must immediately precede either an <a href="#OpBranch"><strong>
 <br>
 <em>Continue Target</em> is the label of a block targeted for processing a loop "continue".<br>
 <br>
+<em>Loop Control Parameters</em> appear in <a href="#Loop_Control">Loop Control</a>-table order for any <em>Loop Control</em> setting that requires such a parameter.<br>
+<br>
 See <a href="#StructuredControlFlow">Structured Control Flow</a> for more detail.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" ><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">4 + variable</p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock">246</p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
 <em>Merge Block</em></p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
 <em>Continue Target</em></p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Loop_Control"><em>Loop Control</em></a><br></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>Literal, Literal, &#8230;</em><br>
+<em>Loop Control Parameters</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -16793,6 +16988,71 @@ To execute both a memory barrier and a control barrier, see <a href="#OpControlB
 <tr>
 <td class="tableblock halign-left valign-top" ><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock">225</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Scope_-id-"><em>Scope &lt;id&gt;</em></a><br>
+<em>Memory</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Memory_Semantics_-id-"><em>Memory Semantics &lt;id&gt;</em></a><br>
+<em>Semantics</em></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:9%;">
+<col style="width:9%;">
+<col style="width:27%;">
+<col style="width:27%;">
+<col style="width:27%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="4" ><p class="tableblock"><a id="OpNamedBarrierInitialize"></a><strong>OpNamedBarrierInitialize</strong><br>
+<br>
+Declare a new named-barrier object.<br>
+<br>
+<em>Result Type</em> must be the type <a href="#OpTypeNamedBarrier"><strong>OpTypeNamedBarrier</strong></a>.<br>
+<br>
+<em>Subgroup Count</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar representing the number of subgroups that must reach the current point of execution.</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Capability">Capability</a>:<br>
+<strong>NamedBarrier</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">328</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Result Type</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#ResultId"><em>Result &lt;id&gt;</em></a></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Subgroup Count</em></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:9%;">
+<col style="width:9%;">
+<col style="width:27%;">
+<col style="width:27%;">
+<col style="width:27%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="4" ><p class="tableblock"><a id="OpMemoryNamedBarrier"></a><strong>OpMemoryNamedBarrier</strong><br>
+<br>
+Wait for other invocations of this module to reach the current point of execution.<br>
+<br>
+<em>Named Barrier</em> must be the type <a href="#OpTypeNamedBarrier"><strong>OpTypeNamedBarrier</strong></a>.<br>
+<br>
+If <em>Semantics</em> is not <strong>None</strong>, this instruction also serves as an <a href="#OpMemoryBarrier"><strong>OpMemoryBarrier</strong></a> instruction, and must also perform and adhere to the description and semantics of an <strong>OpMemoryBarrier</strong> instruction with the same <em>Memory</em> and <em>Semantics</em> operands.  This allows atomically specifying both a control barrier and a memory barrier (that is, without needing two instructions). If <em>Semantics</em> <strong>None</strong>, <em>Memory</em> is ignored.</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Capability">Capability</a>:<br>
+<strong>NamedBarrier</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">329</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Named Barrier</em></p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Scope_-id-"><em>Scope &lt;id&gt;</em></a><br>
 <em>Memory</em></p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Memory_Semantics_-id-"><em>Memory Semantics &lt;id&gt;</em></a><br>
@@ -18110,6 +18370,111 @@ The type of <em>GlobalWorkOffset</em> must be the same as <em>GlobalWorkSize</em
 </tr>
 </tbody>
 </table>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:4%;">
+<col style="width:4%;">
+<col style="width:13%;">
+<col style="width:13%;">
+<col style="width:13%;">
+<col style="width:13%;">
+<col style="width:13%;">
+<col style="width:13%;">
+<col style="width:13%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="7" ><p class="tableblock"><a id="OpGetKernelLocalSizeForSubgroupCount"></a><strong>OpGetKernelLocalSizeForSubgroupCount</strong><br>
+<br>
+Returns the 1D local size to enqueue <em>Invoke</em> with <em>Subgroup Count</em> subgroups per workgroup.<br>
+<br>
+<em>Result Type</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar.<br>
+<br>
+<em>Subgroup Count</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar.<br>
+<br>
+<em>Invoke</em> must be an <a href="#OpFunction"><strong>OpFunction</strong></a> whose <a href="#OpTypeFunction"><strong>OpTypeFunction</strong></a> operand has:<br>
+- <em>Result Type</em> must be <a href="#OpTypeVoid"><strong>OpTypeVoid</strong></a>.<br>
+- The first parameter must have a type of <a href="#OpTypePointer"><strong>OpTypePointer</strong></a> to an 8-bit <a href="#OpTypeInt"><strong>OpTypeInt</strong></a>.<br>
+- An optional list of parameters, each of which must have a type of <a href="#OpTypePointer"><strong>OpTypePointer</strong></a> to the <strong>Workgroup</strong> <a href="#Storage_Class">Storage Class</a>.<br>
+<br>
+<em>Param</em> is the first parameter of the function specified by <em>Invoke</em> and must be a pointer to an 8-bit <a href="#Integer"><em>integer type</em></a> scalar.<br>
+<br>
+<em>Param Size</em> is the size in bytes of the memory pointed to by <em>Param</em> and must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as an unsigned integer.<br>
+<br>
+<em>Param Align</em> is the alignment of <em>Param</em> and must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as an unsigned integer.</p></td>
+<td class="tableblock halign-left valign-top" colspan="2" ><p class="tableblock"><a href="#Capability">Capability</a>:<br>
+<strong>SubgroupDispatch</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">325</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Result Type</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#ResultId"><em>Result &lt;id&gt;</em></a></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Subgroup Count</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Invoke</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Param</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Param Size</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Param Align</em></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:5%;">
+<col style="width:5%;">
+<col style="width:15%;">
+<col style="width:15%;">
+<col style="width:15%;">
+<col style="width:15%;">
+<col style="width:15%;">
+<col style="width:15%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="6" ><p class="tableblock"><a id="OpGetKernelMaxNumSubgroups"></a><strong>OpGetKernelMaxNumSubgroups</strong><br>
+<br>
+Returns the maximum number of subgroups that can be used to execute <em>Invoke</em> on the devce.<br>
+<br>
+<em>Result Type</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar.<br>
+<br>
+<em>Invoke</em> must be an <a href="#OpFunction"><strong>OpFunction</strong></a> whose <a href="#OpTypeFunction"><strong>OpTypeFunction</strong></a> operand has:<br>
+- <em>Result Type</em> must be <a href="#OpTypeVoid"><strong>OpTypeVoid</strong></a>.<br>
+- The first parameter must have a type of <a href="#OpTypePointer"><strong>OpTypePointer</strong></a> to an 8-bit <a href="#OpTypeInt"><strong>OpTypeInt</strong></a>.<br>
+- An optional list of parameters, each of which must have a type of <a href="#OpTypePointer"><strong>OpTypePointer</strong></a> to the <strong>Workgroup</strong> <a href="#Storage_Class">Storage Class</a>.<br>
+<br>
+<em>Param</em> is the first parameter of the function specified by <em>Invoke</em> and must be a pointer to an 8-bit <a href="#Integer"><em>integer type</em></a> scalar.<br>
+<br>
+<em>Param Size</em> is the size in bytes of the memory pointed to by <em>Param</em> and must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as an unsigned integer.<br>
+<br>
+<em>Param Align</em> is the alignment of <em>Param</em> and must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as an unsigned integer.</p></td>
+<td class="tableblock halign-left valign-top" colspan="2" ><p class="tableblock"><a href="#Capability">Capability</a>:<br>
+<strong>SubgroupDispatch</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">326</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Result Type</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#ResultId"><em>Result &lt;id&gt;</em></a></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Invoke</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Param</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Param Size</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Param Align</em></p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after:always"></div>
 </div>
 <div class="sect3">
@@ -18247,7 +18612,7 @@ Read a packet from the reserved area specified by <em>Reserve Id</em> and <em>In
 <br>
 <em>Reserve Id</em> must have a type of <a href="#OpTypeReserveId"><strong>OpTypeReserveId</strong></a>.<br>
 <br>
-<em>Index</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as unsigned value.<br>
+<em>Index</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br>
 <br>
 <em>Pointer</em> must have a type of <a href="#OpTypePointer"><strong>OpTypePointer</strong></a> with the same data type as <em>Pipe</em> and a <strong>Generic</strong> <a href="#Storage_Class">Storage Class</a>.<br>
 <br>
@@ -18310,7 +18675,7 @@ Write a packet from <em>Pointer</em> into the reserved area specified by <em>Res
 <br>
 <em>Reserve Id</em> must have a type of <a href="#OpTypeReserveId"><strong>OpTypeReserveId</strong></a>.<br>
 <br>
-<em>Index</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as unsigned value.<br>
+<em>Index</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br>
 <br>
 <em>Pointer</em> must have a type of <a href="#OpTypePointer"><strong>OpTypePointer</strong></a> with the same data type as <em>Pipe</em> and a <strong>Generic</strong> <a href="#Storage_Class">Storage Class</a>.<br>
 <br>
@@ -18369,7 +18734,7 @@ Reserve <em>Num Packets</em> entries for reading from the pipe object specified 
 <br>
 <em>Pipe</em> must have a type of <a href="#OpTypePipe"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> <a href="#Access_Qualifier"><em>access qualifier</em></a>.<br>
 <br>
-<em>Num Packets</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as unsigned value.<br>
+<em>Num Packets</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br>
 <br>
 <em>Packet Size</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br>
 <br>
@@ -18420,7 +18785,7 @@ Reserve <em>num_packets</em> entries for writing to the pipe object specified by
 <br>
 <em>Pipe</em> must have a type of <a href="#OpTypePipe"><strong>OpTypePipe</strong></a> with <strong>WriteOnly</strong> <a href="#Access_Qualifier"><em>access qualifier</em></a>.<br>
 <br>
-<em>Num Packets</em> must be a 32-bit <a href="#OpTypeInt"><strong>OpTypeInt</strong></a> which is treated as unsigned value.<br>
+<em>Num Packets</em> must be a 32-bit <a href="#OpTypeInt"><strong>OpTypeInt</strong></a> which is treated as an unsigned value.<br>
 <br>
 <em>Result Type</em> must be an <a href="#OpTypeReserveId"><strong>OpTypeReserveId</strong></a>.<br>
 <br>
@@ -18596,7 +18961,7 @@ width:100%;
 <br>
 Result is the number of available entries in the pipe object specified by <em>Pipe</em>. The number of available entries in a pipe is a dynamic value.  The value returned should be considered immediately stale.<br>
 <br>
-<em>Result Type</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which should be treated as unsigned value.<br>
+<em>Result Type</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which should be treated as an unsigned value.<br>
 <br>
 <em>Pipe</em> must have a type of <a href="#OpTypePipe"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> or <strong>WriteOnly</strong> <a href="#Access_Qualifier"><em>access qualifier</em></a>.<br>
 <br>
@@ -18644,7 +19009,7 @@ width:100%;
 <br>
 Result is the maximum number of packets specified when the pipe object specified by <em>Pipe</em> was created.<br>
 <br>
-<em>Result Type</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which should be treated as unsigned value.<br>
+<em>Result Type</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which should be treated as an unsigned value.<br>
 <br>
 <em>Pipe</em> must have a type of <a href="#OpTypePipe"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> or <strong>WriteOnly</strong> <a href="#Access_Qualifier"><em>access qualifier</em></a>.<br>
 <br>
@@ -18707,7 +19072,7 @@ This instruction is only guaranteed to work correctly if placed strictly within 
 <br>
 <em>Pipe</em> must have a type of <a href="#OpTypePipe"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> <a href="#Access_Qualifier"><em>access qualifier</em></a>.<br>
 <br>
-<em>Num Packets</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as unsigned value.<br>
+<em>Num Packets</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br>
 <br>
 <em>Packet Size</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br>
 <br>
@@ -18772,7 +19137,7 @@ This instruction is only guaranteed to work correctly if placed strictly within 
 <br>
 <em>Pipe</em> must have a type of <a href="#OpTypePipe"><strong>OpTypePipe</strong></a> with <strong>WriteOnly</strong> <a href="#Access_Qualifier"><em>access qualifier</em></a>.<br>
 <br>
-<em>Num Packets</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as unsigned value.<br>
+<em>Num Packets</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br>
 <br>
 <em>Packet Size</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br>
 <br>
@@ -18914,6 +19279,88 @@ For concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.
 <em>Packet Size</em></p></td>
 <td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
 <em>Packet Alignment</em></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:5%;">
+<col style="width:5%;">
+<col style="width:17%;">
+<col style="width:17%;">
+<col style="width:17%;">
+<col style="width:17%;">
+<col style="width:17%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" ><p class="tableblock"><a id="OpConstantPipeStorage"></a><strong>OpConstantPipeStorage</strong><br>
+<br>
+Creates a pipe-storage object.<br>
+<br>
+<em>Result Type</em> must be <a href="#OpTypePipeStorage"><strong>OpTypePipeStorage</strong></a>.<br>
+<br>
+<em>Packet Size</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br>
+<br>
+<em>Packet Alignment</em> must be a 32-bit <a href="#Integer"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br>
+<br>
+<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br>
+ - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br>
+ - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br>
+<br>
+For concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.<br>
+<br>
+<em>Capacity</em> is the minimum number of <em>Packet Size</em> blocks the resulting <a href="#OpTypePipeStorage"><strong>OpTypePipeStorage</strong></a> can hold.</p></td>
+<td class="tableblock halign-left valign-top" colspan="2" ><p class="tableblock"><a href="#Capability">Capability</a>:<br>
+<strong>PipeStorage</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">323</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Result Type</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#ResultId"><em>Result &lt;id&gt;</em></a></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Literal_Number"><em>Literal Number</em></a><br>
+<em>Packet Size</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Literal_Number"><em>Literal Number</em></a><br>
+<em>Packet Alignment</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Literal_Number"><em>Literal Number</em></a><br>
+<em>Capacity</em></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all"
+style="
+width:100%;
+">
+<col style="width:9%;">
+<col style="width:9%;">
+<col style="width:27%;">
+<col style="width:27%;">
+<col style="width:27%;">
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="4" ><p class="tableblock"><a id="OpCreatePipeFromPipeStorage"></a><strong>OpCreatePipeFromPipeStorage</strong><br>
+<br>
+Creates a pipe object from a pipe-storage object.<br>
+<br>
+<em>Result Type</em> must be <a href="#OpTypePipe"><strong>OpTypePipe</strong></a>.<br>
+<br>
+<em>Pipe Storage</em> must be a pipe-storage object created from <a href="#OpConstantPipeStorage"><strong>OpConstantPipeStorage</strong></a>.<br>
+<br>
+<em>Qualifier</em> is the pipe access qualifier.</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#Capability">Capability</a>:<br>
+<strong>PipeStorage</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock">324</p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Result Type</em></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><a href="#ResultId"><em>Result &lt;id&gt;</em></a></p></td>
+<td class="tableblock halign-left valign-top" ><p class="tableblock"><em>&lt;id&gt;</em><br>
+<em>Pipe Storage</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -19757,13 +20204,180 @@ Khronos SPIR-V issue #119: <a href="#OpSpecConstantOp"><strong>OpSpecConstantOp<
 </li>
 </ul></div>
 </div>
+<div class="sect2">
+<h3 id="_changes_from_version_1_00">4.11. Changes from Version 1.00</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Moved version number to SPIR-V 1.1
+</p>
+</li>
+<li>
+<p>
+New functionality:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Bug 14202 named barriers:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Added the <strong>NamedBarrier</strong> <a href="#Capability">Capability</a>.
+</p>
+</li>
+<li>
+<p>
+Added the instructions: <a href="#OpTypeNamedBarrier"><strong>OpTypeNamedBarrier</strong></a>, <a href="#OpNamedBarrierInitialize"><strong>OpNamedBarrierInitialize</strong></a>, and <a href="#OpMemoryNamedBarrier"><strong>OpMemoryNamedBarrier</strong></a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Bug 14201 subgroup dispatch:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Added the <strong>SubgroupDispatch</strong> <a href="#Capability">Capability</a>.
+</p>
+</li>
+<li>
+<p>
+Added the instructions: <a href="#OpGetKernelLocalSizeForSubgroupCount"><strong>OpGetKernelLocalSizeForSubgroupCount</strong></a> and <a href="#OpGetKernelMaxNumSubgroups"><strong>OpGetKernelMaxNumSubgroups</strong></a>.
+</p>
+</li>
+<li>
+<p>
+Added <strong>SubgroupSize</strong> and <strong>SubgroupsPerWorkgroup</strong> <a href="#Execution_Mode">Execution Modes</a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Bug 14441 program-scope pipes:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Added the <strong>PipeStorage</strong>  <a href="#Capability">Capability</a>.
+</p>
+</li>
+<li>
+<p>
+Added Instructions: <a href="#OpTypePipeStorage"><strong>OpTypePipeStorage</strong></a>, <a href="#OpConstantPipeStorage"><strong>OpConstantPipeStorage</strong></a>, and <a href="#OpCreatePipeFromPipeStorage"><strong>OpCreatePipeFromPipeStorage</strong></a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Bug 15434 Added the <a href="#OpSizeOf"><strong>OpSizeOf</strong></a> instruction.
+</p>
+</li>
+<li>
+<p>
+Bug 15024 support for OpenCL-C++ ivdep loop attribute:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Added <strong>DependencyInfinite</strong> and <strong>DependencyLength</strong> <a href="#Loop_Control">Loop Controls</a>.
+</p>
+</li>
+<li>
+<p>
+Updated <a href="#OpLoopMerge"><strong>OpLoopMerge</strong></a> to support these.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Bug 14022 Added <strong>Initializer</strong> and <strong>Finalizer</strong> and <a href="#Execution_Mode">Execution Modes</a>.
+</p>
+</li>
+<li>
+<p>
+Bug 15539 Added the <strong>MaxByteOffset</strong> <a href="#Decoration">Decoration</a>.
+</p>
+</li>
+<li>
+<p>
+Bug 15073 Added the <strong>Kernel</strong> <a href="#Capability">Capability</a> to the <strong>SpecId</strong> <a href="#Decoration">Decoration</a>.
+</p>
+</li>
+<li>
+<p>
+Bug 14828 Added the <a href="#OpModuleProcessed"><strong>OpModuleProcessed</strong></a> instruction.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Fixed internal bugs:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Bug 15481 Clarification on alignment and size operands for pipe operands
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_changes_from_version_1_1_revision_1">4.12. Changes from Version 1.1, Revision 1</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Incorporated bug fixes from Revision 6 of Version 1.00 (see section 4.7. Changes from Version 1.00, Revision 5).
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_changes_from_version_1_1_revision_2">4.13. Changes from Version 1.1, Revision 2</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Incorporated bug fixes from Revision 7 of Version 1.00 (see section 4.8. Changes from Version 1.00, Revision 6).
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_changes_from_version_1_1_revision_3">4.14. Changes from Version 1.1, Revision 3</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Incorporated bug fixes from Revision 8 of Version 1.00 (see section 4.9. Changes from Version 1.00, Revision 7).
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_changes_from_version_1_1_revision_4">4.15. Changes from Version 1.1, Revision 4</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Incorporated bug fixes from Revision 9 of Version 1.00 (see section 4.10. Changes from Version 1.00, Revision 8).
+</p>
+</li>
+</ul></div>
+</div>
 </div>
 </div>
 </div>
 <div id="footnotes"><hr></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.00, Revision 9<br>
+Version 1.1, Revision 5<br>
 Last updated 2016-04-14 16:52:03 MDT
 </div>
 </div>

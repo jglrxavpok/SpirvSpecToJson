@@ -1,8 +1,8 @@
 {
   "Metadata": {
-    "Title": "SPIR-V Specification",
-    "Author": "John Kessenich, Google; Boaz Ouriel, Intel",
-    "Revnumber": "version 1.00, Revision 9",
+    "Title": "SPIR-V Specification Provisional",
+    "Author": "John Kessenich, Google; Boaz Ouriel, Intel; Raun Krisch, Intel",
+    "Revnumber": "version 1.1, Revision 5",
     "LastUpdate": "Last updated 2016-04-14 16:52:03 MDT"
   },
   "OpCodes": [
@@ -12,6 +12,10 @@
       "DescriptionPlain": "OpNop\n\n This has no semantic impact and can safely be removed from a module.",
       "Category": "Miscellaneous",
       "Capabilities": [],
+      "WordCount": "1",
+      "WordCountFix": 1,
+      "OpCode": 0,
+      "HasVariableWordCount": false,
       "HasResult": false,
       "HasResultType": false,
       "Operands": []
@@ -35,6 +39,35 @@
         },
         {
           "Name": "Result",
+          "Type": "ID"
+        }
+      ]
+    },
+    {
+      "Name": "OpSizeOf",
+      "Description": "<a id=\"OpSizeOf\"></a><strong>OpSizeOf</strong><br />\n<br />\nComputes the run-time size of the type pointed to by <em>Pointer</em><br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Pointer</em> must point to a concrete type.",
+      "DescriptionPlain": "OpSizeOf\n\nComputes the run-time size of the type pointed to by Pointer\n\nResult Type must be a 32-bit integer type scalar.\n\nPointer must point to a concrete type.",
+      "Category": "Miscellaneous",
+      "Capabilities": [
+        "Capability"
+      ],
+      "WordCount": "4",
+      "WordCountFix": 4,
+      "OpCode": 321,
+      "HasVariableWordCount": false,
+      "HasResult": true,
+      "HasResultType": true,
+      "Operands": [
+        {
+          "Name": "ResultType",
+          "Type": "ID"
+        },
+        {
+          "Name": "Result",
+          "Type": "ID"
+        },
+        {
+          "Name": "Pointer",
           "Type": "ID"
         }
       ]
@@ -214,9 +247,32 @@
       "DescriptionPlain": "OpNoLine\n\nDiscontinue any source-level location information that might be active from a previous OpLine instruction. This has no semantic impact and can safely be removed from a module.\n\nThis instruction can only appear after the annotation instructions (see the Logical Layout section). It cannot be the last instruction in a block, or the second-to-last instruction if the block has a merge instruction. There is not a requirement that there is a preceding OpLine instruction.",
       "Category": "Debug",
       "Capabilities": [],
+      "WordCount": "1",
+      "WordCountFix": 1,
+      "OpCode": 317,
+      "HasVariableWordCount": false,
       "HasResult": false,
       "HasResultType": false,
       "Operands": []
+    },
+    {
+      "Name": "OpModuleProcessed",
+      "Description": "<a id=\"OpModuleProcessed\"></a><strong>OpModuleProcessed</strong><br />\n<br />\nDocument a process that was applied to a module. This has no semantic impact and can safely be removed from a module.<br />\n<br />\n<em>Process</em> is a string describing a process and/or tool (processor) that did the processing. Its form is dependent on the processor.",
+      "DescriptionPlain": "OpModuleProcessed\n\nDocument a process that was applied to a module. This has no semantic impact and can safely be removed from a module.\n\nProcess is a string describing a process and/or tool (processor) that did the processing. Its form is dependent on the processor.",
+      "Category": "Debug",
+      "Capabilities": [],
+      "WordCount": "2 + variable",
+      "WordCountFix": 2,
+      "OpCode": 330,
+      "HasVariableWordCount": true,
+      "HasResult": false,
+      "HasResultType": false,
+      "Operands": [
+        {
+          "Name": "Process",
+          "Type": "LiteralString"
+        }
+      ]
     },
     {
       "Name": "OpDecorate",
@@ -1044,6 +1100,48 @@
       ]
     },
     {
+      "Name": "OpTypePipeStorage",
+      "Description": "<a id=\"OpTypePipeStorage\"></a><strong>OpTypePipeStorage</strong><br />\n<br />\nDeclare the OpenCL pipe-storage type.",
+      "DescriptionPlain": "OpTypePipeStorage\n\nDeclare the OpenCL pipe-storage type.",
+      "Category": "Type-Declaration",
+      "Capabilities": [
+        "Capability"
+      ],
+      "WordCount": "2",
+      "WordCountFix": 2,
+      "OpCode": 322,
+      "HasVariableWordCount": false,
+      "HasResult": true,
+      "HasResultType": false,
+      "Operands": [
+        {
+          "Name": "Result",
+          "Type": "ID"
+        }
+      ]
+    },
+    {
+      "Name": "OpTypeNamedBarrier",
+      "Description": "<a id=\"OpTypeNamedBarrier\"></a><strong>OpTypeNamedBarrier</strong><br />\n<br />\nDeclare the named-barrier type.",
+      "DescriptionPlain": "OpTypeNamedBarrier\n\nDeclare the named-barrier type.",
+      "Category": "Type-Declaration",
+      "Capabilities": [
+        "Capability"
+      ],
+      "WordCount": "2",
+      "WordCountFix": 2,
+      "OpCode": 327,
+      "HasVariableWordCount": false,
+      "HasResult": true,
+      "HasResultType": false,
+      "Operands": [
+        {
+          "Name": "Result",
+          "Type": "ID"
+        }
+      ]
+    },
+    {
       "Name": "OpConstantTrue",
       "Description": "<a id=\"OpConstantTrue\"></a><strong>OpConstantTrue</strong><br />\n<br />\nDeclare a <strong>true</strong> <a href=\"#Boolean\"><em>Boolean-type</em></a> scalar constant.<br />\n<br />\n<em>Result Type</em> must be the scalar <a href=\"#Boolean\"><em>Boolean type</em></a>.",
       "DescriptionPlain": "OpConstantTrue\n\nDeclare a true Boolean-type scalar constant.\n\nResult Type must be the scalar Boolean type.",
@@ -1776,6 +1874,10 @@
       "DescriptionPlain": "OpFunctionEnd\n\nLast instruction of a function.",
       "Category": "Function",
       "Capabilities": [],
+      "WordCount": "1",
+      "WordCountFix": 1,
+      "OpCode": 56,
+      "HasVariableWordCount": false,
       "HasResult": false,
       "HasResultType": false,
       "Operands": []
@@ -6579,14 +6681,14 @@
     },
     {
       "Name": "OpLoopMerge",
-      "Description": "<a id=\"OpLoopMerge\"></a><strong>OpLoopMerge</strong><br />\n<br />\nDeclare a structured loop.<br />\n<br />\nThis instruction must immediately precede either an <a href=\"#OpBranch\"><strong>OpBranch</strong></a> or <a href=\"#OpBranchConditional\"><strong>OpBranchConditional</strong></a> instruction. That is, it must be the second-to-last instruction in its block.<br />\n<br />\n<em>Merge Block</em> is the label of the merge block for this structured loop.<br />\n<br />\n<em>Continue Target</em> is the label of a block targeted for processing a loop \"continue\".<br />\n<br />\nSee <a href=\"#StructuredControlFlow\">Structured Control Flow</a> for more detail.",
-      "DescriptionPlain": "OpLoopMerge\n\nDeclare a structured loop.\n\nThis instruction must immediately precede either an OpBranch or OpBranchConditional instruction. That is, it must be the second-to-last instruction in its block.\n\nMerge Block is the label of the merge block for this structured loop.\n\nContinue Target is the label of a block targeted for processing a loop \"continue\".\n\nSee Structured Control Flow for more detail.",
+      "Description": "<a id=\"OpLoopMerge\"></a><strong>OpLoopMerge</strong><br />\n<br />\nDeclare a structured loop.<br />\n<br />\nThis instruction must immediately precede either an <a href=\"#OpBranch\"><strong>OpBranch</strong></a> or <a href=\"#OpBranchConditional\"><strong>OpBranchConditional</strong></a> instruction. That is, it must be the second-to-last instruction in its block.<br />\n<br />\n<em>Merge Block</em> is the label of the merge block for this structured loop.<br />\n<br />\n<em>Continue Target</em> is the label of a block targeted for processing a loop \"continue\".<br />\n<br />\n<em>Loop Control Parameters</em> appear in <a href=\"#Loop_Control\">Loop Control</a>-table order for any <em>Loop Control</em> setting that requires such a parameter.<br />\n<br />\nSee <a href=\"#StructuredControlFlow\">Structured Control Flow</a> for more detail.",
+      "DescriptionPlain": "OpLoopMerge\n\nDeclare a structured loop.\n\nThis instruction must immediately precede either an OpBranch or OpBranchConditional instruction. That is, it must be the second-to-last instruction in its block.\n\nMerge Block is the label of the merge block for this structured loop.\n\nContinue Target is the label of a block targeted for processing a loop \"continue\".\n\nLoop Control Parameters appear in Loop Control-table order for any Loop Control setting that requires such a parameter.\n\nSee Structured Control Flow for more detail.",
       "Category": "Control-Flow",
       "Capabilities": [],
-      "WordCount": "4",
+      "WordCount": "4 + variable",
       "WordCountFix": 4,
       "OpCode": 246,
-      "HasVariableWordCount": false,
+      "HasVariableWordCount": true,
       "HasResult": false,
       "HasResultType": false,
       "Operands": [
@@ -6601,6 +6703,10 @@
         {
           "Name": "LoopControl",
           "Type": "LoopControl"
+        },
+        {
+          "Name": null,
+          "Type": null
         }
       ]
     },
@@ -6731,6 +6837,10 @@
       "Capabilities": [
         "Capability"
       ],
+      "WordCount": "1",
+      "WordCountFix": 1,
+      "OpCode": 252,
+      "HasVariableWordCount": false,
       "HasResult": false,
       "HasResultType": false,
       "Operands": []
@@ -6741,6 +6851,10 @@
       "DescriptionPlain": "OpReturn\n\nReturn with no value from a function with void return type.\n\nThis instruction must be the last instruction in a block.",
       "Category": "Control-Flow",
       "Capabilities": [],
+      "WordCount": "1",
+      "WordCountFix": 1,
+      "OpCode": 253,
+      "HasVariableWordCount": false,
       "HasResult": false,
       "HasResultType": false,
       "Operands": []
@@ -6770,6 +6884,10 @@
       "DescriptionPlain": "OpUnreachable\n\nDeclares that this block is not reachable in the CFG.\n\nThis instruction must be the last instruction in a block.",
       "Category": "Control-Flow",
       "Capabilities": [],
+      "WordCount": "1",
+      "WordCountFix": 1,
+      "OpCode": 255,
+      "HasVariableWordCount": false,
       "HasResult": false,
       "HasResultType": false,
       "Operands": []
@@ -7520,6 +7638,10 @@
       "Capabilities": [
         "Capability"
       ],
+      "WordCount": "1",
+      "WordCountFix": 1,
+      "OpCode": 218,
+      "HasVariableWordCount": false,
       "HasResult": false,
       "HasResultType": false,
       "Operands": []
@@ -7532,6 +7654,10 @@
       "Capabilities": [
         "Capability"
       ],
+      "WordCount": "1",
+      "WordCountFix": 1,
+      "OpCode": 219,
+      "HasVariableWordCount": false,
       "HasResult": false,
       "HasResultType": false,
       "Operands": []
@@ -7618,6 +7744,64 @@
       "HasResult": false,
       "HasResultType": false,
       "Operands": [
+        {
+          "Name": "ScopeMemory",
+          "Type": "ID"
+        },
+        {
+          "Name": "MemorySemanticsSemantics",
+          "Type": "ID"
+        }
+      ]
+    },
+    {
+      "Name": "OpNamedBarrierInitialize",
+      "Description": "<a id=\"OpNamedBarrierInitialize\"></a><strong>OpNamedBarrierInitialize</strong><br />\n<br />\nDeclare a new named-barrier object.<br />\n<br />\n<em>Result Type</em> must be the type <a href=\"#OpTypeNamedBarrier\"><strong>OpTypeNamedBarrier</strong></a>.<br />\n<br />\n<em>Subgroup Count</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar representing the number of subgroups that must reach the current point of execution.",
+      "DescriptionPlain": "OpNamedBarrierInitialize\n\nDeclare a new named-barrier object.\n\nResult Type must be the type OpTypeNamedBarrier.\n\nSubgroup Count must be a 32-bit integer type scalar representing the number of subgroups that must reach the current point of execution.",
+      "Category": "Barrier",
+      "Capabilities": [
+        "Capability"
+      ],
+      "WordCount": "4",
+      "WordCountFix": 4,
+      "OpCode": 328,
+      "HasVariableWordCount": false,
+      "HasResult": true,
+      "HasResultType": true,
+      "Operands": [
+        {
+          "Name": "ResultType",
+          "Type": "ID"
+        },
+        {
+          "Name": "Result",
+          "Type": "ID"
+        },
+        {
+          "Name": "SubgroupCount",
+          "Type": "ID"
+        }
+      ]
+    },
+    {
+      "Name": "OpMemoryNamedBarrier",
+      "Description": "<a id=\"OpMemoryNamedBarrier\"></a><strong>OpMemoryNamedBarrier</strong><br />\n<br />\nWait for other invocations of this module to reach the current point of execution.<br />\n<br />\n<em>Named Barrier</em> must be the type <a href=\"#OpTypeNamedBarrier\"><strong>OpTypeNamedBarrier</strong></a>.<br />\n<br />\nIf <em>Semantics</em> is not <strong>None</strong>, this instruction also serves as an <a href=\"#OpMemoryBarrier\"><strong>OpMemoryBarrier</strong></a> instruction, and must also perform and adhere to the description and semantics of an <strong>OpMemoryBarrier</strong> instruction with the same <em>Memory</em> and <em>Semantics</em> operands.  This allows atomically specifying both a control barrier and a memory barrier (that is, without needing two instructions). If <em>Semantics</em> <strong>None</strong>, <em>Memory</em> is ignored.",
+      "DescriptionPlain": "OpMemoryNamedBarrier\n\nWait for other invocations of this module to reach the current point of execution.\n\nNamed Barrier must be the type OpTypeNamedBarrier.\n\nIf Semantics is not None, this instruction also serves as an OpMemoryBarrier instruction, and must also perform and adhere to the description and semantics of an OpMemoryBarrier instruction with the same Memory and Semantics operands.  This allows atomically specifying both a control barrier and a memory barrier (that is, without needing two instructions). If Semantics None, Memory is ignored.",
+      "Category": "Barrier",
+      "Capabilities": [
+        "Capability"
+      ],
+      "WordCount": "4",
+      "WordCountFix": 4,
+      "OpCode": 329,
+      "HasVariableWordCount": false,
+      "HasResult": false,
+      "HasResultType": false,
+      "Operands": [
+        {
+          "Name": "NamedBarrier",
+          "Type": "ID"
+        },
         {
           "Name": "ScopeMemory",
           "Type": "ID"
@@ -8691,6 +8875,92 @@
       ]
     },
     {
+      "Name": "OpGetKernelLocalSizeForSubgroupCount",
+      "Description": "<a id=\"OpGetKernelLocalSizeForSubgroupCount\"></a><strong>OpGetKernelLocalSizeForSubgroupCount</strong><br />\n<br />\nReturns the 1D local size to enqueue <em>Invoke</em> with <em>Subgroup Count</em> subgroups per workgroup.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Subgroup Count</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Invoke</em> must be an <a href=\"#OpFunction\"><strong>OpFunction</strong></a> whose <a href=\"#OpTypeFunction\"><strong>OpTypeFunction</strong></a> operand has:<br />\n- <em>Result Type</em> must be <a href=\"#OpTypeVoid\"><strong>OpTypeVoid</strong></a>.<br />\n- The first parameter must have a type of <a href=\"#OpTypePointer\"><strong>OpTypePointer</strong></a> to an 8-bit <a href=\"#OpTypeInt\"><strong>OpTypeInt</strong></a>.<br />\n- An optional list of parameters, each of which must have a type of <a href=\"#OpTypePointer\"><strong>OpTypePointer</strong></a> to the <strong>Workgroup</strong> <a href=\"#Storage_Class\">Storage Class</a>.<br />\n<br />\n<em>Param</em> is the first parameter of the function specified by <em>Invoke</em> and must be a pointer to an 8-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Param Size</em> is the size in bytes of the memory pointed to by <em>Param</em> and must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as an unsigned integer.<br />\n<br />\n<em>Param Align</em> is the alignment of <em>Param</em> and must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as an unsigned integer.",
+      "DescriptionPlain": "OpGetKernelLocalSizeForSubgroupCount\n\nReturns the 1D local size to enqueue Invoke with Subgroup Count subgroups per workgroup.\n\nResult Type must be a 32-bit integer type scalar.\n\nSubgroup Count must be a 32-bit integer type scalar.\n\nInvoke must be an OpFunction whose OpTypeFunction operand has:\n- Result Type must be OpTypeVoid.\n- The first parameter must have a type of OpTypePointer to an 8-bit OpTypeInt.\n- An optional list of parameters, each of which must have a type of OpTypePointer to the Workgroup Storage Class.\n\nParam is the first parameter of the function specified by Invoke and must be a pointer to an 8-bit integer type scalar.\n\nParam Size is the size in bytes of the memory pointed to by Param and must be a 32-bit integer type scalar, which is treated as an unsigned integer.\n\nParam Align is the alignment of Param and must be a 32-bit integer type scalar, which is treated as an unsigned integer.",
+      "Category": "Device-SideEnqueue",
+      "Capabilities": [
+        "Capability"
+      ],
+      "WordCount": "8",
+      "WordCountFix": 8,
+      "OpCode": 325,
+      "HasVariableWordCount": false,
+      "HasResult": true,
+      "HasResultType": true,
+      "Operands": [
+        {
+          "Name": "ResultType",
+          "Type": "ID"
+        },
+        {
+          "Name": "Result",
+          "Type": "ID"
+        },
+        {
+          "Name": "SubgroupCount",
+          "Type": "ID"
+        },
+        {
+          "Name": "Invoke",
+          "Type": "ID"
+        },
+        {
+          "Name": "Param",
+          "Type": "ID"
+        },
+        {
+          "Name": "ParamSize",
+          "Type": "ID"
+        },
+        {
+          "Name": "ParamAlign",
+          "Type": "ID"
+        }
+      ]
+    },
+    {
+      "Name": "OpGetKernelMaxNumSubgroups",
+      "Description": "<a id=\"OpGetKernelMaxNumSubgroups\"></a><strong>OpGetKernelMaxNumSubgroups</strong><br />\n<br />\nReturns the maximum number of subgroups that can be used to execute <em>Invoke</em> on the devce.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Invoke</em> must be an <a href=\"#OpFunction\"><strong>OpFunction</strong></a> whose <a href=\"#OpTypeFunction\"><strong>OpTypeFunction</strong></a> operand has:<br />\n- <em>Result Type</em> must be <a href=\"#OpTypeVoid\"><strong>OpTypeVoid</strong></a>.<br />\n- The first parameter must have a type of <a href=\"#OpTypePointer\"><strong>OpTypePointer</strong></a> to an 8-bit <a href=\"#OpTypeInt\"><strong>OpTypeInt</strong></a>.<br />\n- An optional list of parameters, each of which must have a type of <a href=\"#OpTypePointer\"><strong>OpTypePointer</strong></a> to the <strong>Workgroup</strong> <a href=\"#Storage_Class\">Storage Class</a>.<br />\n<br />\n<em>Param</em> is the first parameter of the function specified by <em>Invoke</em> and must be a pointer to an 8-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Param Size</em> is the size in bytes of the memory pointed to by <em>Param</em> and must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as an unsigned integer.<br />\n<br />\n<em>Param Align</em> is the alignment of <em>Param</em> and must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as an unsigned integer.",
+      "DescriptionPlain": "OpGetKernelMaxNumSubgroups\n\nReturns the maximum number of subgroups that can be used to execute Invoke on the devce.\n\nResult Type must be a 32-bit integer type scalar.\n\nInvoke must be an OpFunction whose OpTypeFunction operand has:\n- Result Type must be OpTypeVoid.\n- The first parameter must have a type of OpTypePointer to an 8-bit OpTypeInt.\n- An optional list of parameters, each of which must have a type of OpTypePointer to the Workgroup Storage Class.\n\nParam is the first parameter of the function specified by Invoke and must be a pointer to an 8-bit integer type scalar.\n\nParam Size is the size in bytes of the memory pointed to by Param and must be a 32-bit integer type scalar, which is treated as an unsigned integer.\n\nParam Align is the alignment of Param and must be a 32-bit integer type scalar, which is treated as an unsigned integer.",
+      "Category": "Device-SideEnqueue",
+      "Capabilities": [
+        "Capability"
+      ],
+      "WordCount": "7",
+      "WordCountFix": 7,
+      "OpCode": 326,
+      "HasVariableWordCount": false,
+      "HasResult": true,
+      "HasResultType": true,
+      "Operands": [
+        {
+          "Name": "ResultType",
+          "Type": "ID"
+        },
+        {
+          "Name": "Result",
+          "Type": "ID"
+        },
+        {
+          "Name": "Invoke",
+          "Type": "ID"
+        },
+        {
+          "Name": "Param",
+          "Type": "ID"
+        },
+        {
+          "Name": "ParamSize",
+          "Type": "ID"
+        },
+        {
+          "Name": "ParamAlign",
+          "Type": "ID"
+        }
+      ]
+    },
+    {
       "Name": "OpReadPipe",
       "Description": "<a id=\"OpReadPipe\"></a><strong>OpReadPipe</strong><br />\n<br />\nRead a packet from the pipe object specified by <em>Pipe</em> into <em>Pointer</em>. Result is 0 if the operation is successful and a negative value if the pipe is empty.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Pointer</em> must have a type of <a href=\"#OpTypePointer\"><strong>OpTypePointer</strong></a> with the same data type as <em>Pipe</em> and a <strong>Generic</strong> <a href=\"#Storage_Class\">Storage Class</a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
       "DescriptionPlain": "OpReadPipe\n\nRead a packet from the pipe object specified by Pipe into Pointer. Result is 0 if the operation is successful and a negative value if the pipe is empty.\n\nResult Type must be a 32-bit integer type scalar.\n\nPipe must have a type of OpTypePipe with ReadOnly access qualifier.\n\nPointer must have a type of OpTypePointer with the same data type as Pipe and a Generic Storage Class.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
@@ -8774,8 +9044,8 @@
     },
     {
       "Name": "OpReservedReadPipe",
-      "Description": "<a id=\"OpReservedReadPipe\"></a><strong>OpReservedReadPipe</strong><br />\n<br />\nRead a packet from the reserved area specified by <em>Reserve Id</em> and <em>Index</em> of the pipe object specified by <em>Pipe</em> into <em>Pointer</em>. The reserved pipe entries are referred to by indices that go from 0 &#8230; <em>Num Packets</em> - 1. Result is 0 if the operation is successful and a negative value otherwise.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Reserve Id</em> must have a type of <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Index</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as unsigned value.<br />\n<br />\n<em>Pointer</em> must have a type of <a href=\"#OpTypePointer\"><strong>OpTypePointer</strong></a> with the same data type as <em>Pipe</em> and a <strong>Generic</strong> <a href=\"#Storage_Class\">Storage Class</a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
-      "DescriptionPlain": "OpReservedReadPipe\n\nRead a packet from the reserved area specified by Reserve Id and Index of the pipe object specified by Pipe into Pointer. The reserved pipe entries are referred to by indices that go from 0 &#8230; Num Packets - 1. Result is 0 if the operation is successful and a negative value otherwise.\n\nResult Type must be a 32-bit integer type scalar.\n\nPipe must have a type of OpTypePipe with ReadOnly access qualifier.\n\nReserve Id must have a type of OpTypeReserveId.\n\nIndex must be a 32-bit integer type scalar, which is treated as unsigned value.\n\nPointer must have a type of OpTypePointer with the same data type as Pipe and a Generic Storage Class.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
+      "Description": "<a id=\"OpReservedReadPipe\"></a><strong>OpReservedReadPipe</strong><br />\n<br />\nRead a packet from the reserved area specified by <em>Reserve Id</em> and <em>Index</em> of the pipe object specified by <em>Pipe</em> into <em>Pointer</em>. The reserved pipe entries are referred to by indices that go from 0 &#8230; <em>Num Packets</em> - 1. Result is 0 if the operation is successful and a negative value otherwise.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Reserve Id</em> must have a type of <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Index</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br />\n<br />\n<em>Pointer</em> must have a type of <a href=\"#OpTypePointer\"><strong>OpTypePointer</strong></a> with the same data type as <em>Pipe</em> and a <strong>Generic</strong> <a href=\"#Storage_Class\">Storage Class</a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
+      "DescriptionPlain": "OpReservedReadPipe\n\nRead a packet from the reserved area specified by Reserve Id and Index of the pipe object specified by Pipe into Pointer. The reserved pipe entries are referred to by indices that go from 0 &#8230; Num Packets - 1. Result is 0 if the operation is successful and a negative value otherwise.\n\nResult Type must be a 32-bit integer type scalar.\n\nPipe must have a type of OpTypePipe with ReadOnly access qualifier.\n\nReserve Id must have a type of OpTypeReserveId.\n\nIndex must be a 32-bit integer type scalar, which is treated as an unsigned value.\n\nPointer must have a type of OpTypePointer with the same data type as Pipe and a Generic Storage Class.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
       "Category": "Pipe",
       "Capabilities": [
         "Capability"
@@ -8823,8 +9093,8 @@
     },
     {
       "Name": "OpReservedWritePipe",
-      "Description": "<a id=\"OpReservedWritePipe\"></a><strong>OpReservedWritePipe</strong><br />\n<br />\nWrite a packet from <em>Pointer</em> into the reserved area specified by <em>Reserve Id</em> and <em>Index</em> of the pipe object specified by <em>Pipe</em>. The reserved pipe entries are referred to by indices that go from 0 &#8230; <em>Num Packets</em> - 1. Result is 0 if the operation is successful and a negative value otherwise.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Reserve Id</em> must have a type of <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Index</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as unsigned value.<br />\n<br />\n<em>Pointer</em> must have a type of <a href=\"#OpTypePointer\"><strong>OpTypePointer</strong></a> with the same data type as <em>Pipe</em> and a <strong>Generic</strong> <a href=\"#Storage_Class\">Storage Class</a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
-      "DescriptionPlain": "OpReservedWritePipe\n\nWrite a packet from Pointer into the reserved area specified by Reserve Id and Index of the pipe object specified by Pipe. The reserved pipe entries are referred to by indices that go from 0 &#8230; Num Packets - 1. Result is 0 if the operation is successful and a negative value otherwise.\n\nResult Type must be a 32-bit integer type scalar.\n\nPipe must have a type of OpTypePipe with WriteOnly access qualifier.\n\nReserve Id must have a type of OpTypeReserveId.\n\nIndex must be a 32-bit integer type scalar, which is treated as unsigned value.\n\nPointer must have a type of OpTypePointer with the same data type as Pipe and a Generic Storage Class.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
+      "Description": "<a id=\"OpReservedWritePipe\"></a><strong>OpReservedWritePipe</strong><br />\n<br />\nWrite a packet from <em>Pointer</em> into the reserved area specified by <em>Reserve Id</em> and <em>Index</em> of the pipe object specified by <em>Pipe</em>. The reserved pipe entries are referred to by indices that go from 0 &#8230; <em>Num Packets</em> - 1. Result is 0 if the operation is successful and a negative value otherwise.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Reserve Id</em> must have a type of <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Index</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br />\n<br />\n<em>Pointer</em> must have a type of <a href=\"#OpTypePointer\"><strong>OpTypePointer</strong></a> with the same data type as <em>Pipe</em> and a <strong>Generic</strong> <a href=\"#Storage_Class\">Storage Class</a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
+      "DescriptionPlain": "OpReservedWritePipe\n\nWrite a packet from Pointer into the reserved area specified by Reserve Id and Index of the pipe object specified by Pipe. The reserved pipe entries are referred to by indices that go from 0 &#8230; Num Packets - 1. Result is 0 if the operation is successful and a negative value otherwise.\n\nResult Type must be a 32-bit integer type scalar.\n\nPipe must have a type of OpTypePipe with WriteOnly access qualifier.\n\nReserve Id must have a type of OpTypeReserveId.\n\nIndex must be a 32-bit integer type scalar, which is treated as an unsigned value.\n\nPointer must have a type of OpTypePointer with the same data type as Pipe and a Generic Storage Class.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
       "Category": "Pipe",
       "Capabilities": [
         "Capability"
@@ -8872,8 +9142,8 @@
     },
     {
       "Name": "OpReserveReadPipePackets",
-      "Description": "<a id=\"OpReserveReadPipePackets\"></a><strong>OpReserveReadPipePackets</strong><br />\n<br />\nReserve <em>Num Packets</em> entries for reading from the pipe object specified by <em>Pipe</em>. Result is a valid reservation ID if the reservation is successful.<br />\n<br />\n<em>Result Type</em> must be an <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Num Packets</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as unsigned value.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
-      "DescriptionPlain": "OpReserveReadPipePackets\n\nReserve Num Packets entries for reading from the pipe object specified by Pipe. Result is a valid reservation ID if the reservation is successful.\n\nResult Type must be an OpTypeReserveId.\n\nPipe must have a type of OpTypePipe with ReadOnly access qualifier.\n\nNum Packets must be a 32-bit integer type scalar, which is treated as unsigned value.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
+      "Description": "<a id=\"OpReserveReadPipePackets\"></a><strong>OpReserveReadPipePackets</strong><br />\n<br />\nReserve <em>Num Packets</em> entries for reading from the pipe object specified by <em>Pipe</em>. Result is a valid reservation ID if the reservation is successful.<br />\n<br />\n<em>Result Type</em> must be an <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Num Packets</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
+      "DescriptionPlain": "OpReserveReadPipePackets\n\nReserve Num Packets entries for reading from the pipe object specified by Pipe. Result is a valid reservation ID if the reservation is successful.\n\nResult Type must be an OpTypeReserveId.\n\nPipe must have a type of OpTypePipe with ReadOnly access qualifier.\n\nNum Packets must be a 32-bit integer type scalar, which is treated as an unsigned value.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
       "Category": "Pipe",
       "Capabilities": [
         "Capability"
@@ -8913,8 +9183,8 @@
     },
     {
       "Name": "OpReserveWritePipePackets",
-      "Description": "<a id=\"OpReserveWritePipePackets\"></a><strong>OpReserveWritePipePackets</strong><br />\n<br />\nReserve <em>num_packets</em> entries for writing to the pipe object specified by <em>Pipe</em>. Result is a valid reservation ID if the reservation is successful.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Num Packets</em> must be a 32-bit <a href=\"#OpTypeInt\"><strong>OpTypeInt</strong></a> which is treated as unsigned value.<br />\n<br />\n<em>Result Type</em> must be an <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
-      "DescriptionPlain": "OpReserveWritePipePackets\n\nReserve num_packets entries for writing to the pipe object specified by Pipe. Result is a valid reservation ID if the reservation is successful.\n\nPipe must have a type of OpTypePipe with WriteOnly access qualifier.\n\nNum Packets must be a 32-bit OpTypeInt which is treated as unsigned value.\n\nResult Type must be an OpTypeReserveId.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
+      "Description": "<a id=\"OpReserveWritePipePackets\"></a><strong>OpReserveWritePipePackets</strong><br />\n<br />\nReserve <em>num_packets</em> entries for writing to the pipe object specified by <em>Pipe</em>. Result is a valid reservation ID if the reservation is successful.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Num Packets</em> must be a 32-bit <a href=\"#OpTypeInt\"><strong>OpTypeInt</strong></a> which is treated as an unsigned value.<br />\n<br />\n<em>Result Type</em> must be an <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
+      "DescriptionPlain": "OpReserveWritePipePackets\n\nReserve num_packets entries for writing to the pipe object specified by Pipe. Result is a valid reservation ID if the reservation is successful.\n\nPipe must have a type of OpTypePipe with WriteOnly access qualifier.\n\nNum Packets must be a 32-bit OpTypeInt which is treated as an unsigned value.\n\nResult Type must be an OpTypeReserveId.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
       "Category": "Pipe",
       "Capabilities": [
         "Capability"
@@ -9049,8 +9319,8 @@
     },
     {
       "Name": "OpGetNumPipePackets",
-      "Description": "<a id=\"OpGetNumPipePackets\"></a><strong>OpGetNumPipePackets</strong><br />\n<br />\nResult is the number of available entries in the pipe object specified by <em>Pipe</em>. The number of available entries in a pipe is a dynamic value.  The value returned should be considered immediately stale.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which should be treated as unsigned value.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> or <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
-      "DescriptionPlain": "OpGetNumPipePackets\n\nResult is the number of available entries in the pipe object specified by Pipe. The number of available entries in a pipe is a dynamic value.  The value returned should be considered immediately stale.\n\nResult Type must be a 32-bit integer type scalar, which should be treated as unsigned value.\n\nPipe must have a type of OpTypePipe with ReadOnly or WriteOnly access qualifier.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
+      "Description": "<a id=\"OpGetNumPipePackets\"></a><strong>OpGetNumPipePackets</strong><br />\n<br />\nResult is the number of available entries in the pipe object specified by <em>Pipe</em>. The number of available entries in a pipe is a dynamic value.  The value returned should be considered immediately stale.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which should be treated as an unsigned value.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> or <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
+      "DescriptionPlain": "OpGetNumPipePackets\n\nResult is the number of available entries in the pipe object specified by Pipe. The number of available entries in a pipe is a dynamic value.  The value returned should be considered immediately stale.\n\nResult Type must be a 32-bit integer type scalar, which should be treated as an unsigned value.\n\nPipe must have a type of OpTypePipe with ReadOnly or WriteOnly access qualifier.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
       "Category": "Pipe",
       "Capabilities": [
         "Capability"
@@ -9086,8 +9356,8 @@
     },
     {
       "Name": "OpGetMaxPipePackets",
-      "Description": "<a id=\"OpGetMaxPipePackets\"></a><strong>OpGetMaxPipePackets</strong><br />\n<br />\nResult is the maximum number of packets specified when the pipe object specified by <em>Pipe</em> was created.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which should be treated as unsigned value.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> or <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
-      "DescriptionPlain": "OpGetMaxPipePackets\n\nResult is the maximum number of packets specified when the pipe object specified by Pipe was created.\n\nResult Type must be a 32-bit integer type scalar, which should be treated as unsigned value.\n\nPipe must have a type of OpTypePipe with ReadOnly or WriteOnly access qualifier.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
+      "Description": "<a id=\"OpGetMaxPipePackets\"></a><strong>OpGetMaxPipePackets</strong><br />\n<br />\nResult is the maximum number of packets specified when the pipe object specified by <em>Pipe</em> was created.<br />\n<br />\n<em>Result Type</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which should be treated as an unsigned value.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> or <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
+      "DescriptionPlain": "OpGetMaxPipePackets\n\nResult is the maximum number of packets specified when the pipe object specified by Pipe was created.\n\nResult Type must be a 32-bit integer type scalar, which should be treated as an unsigned value.\n\nPipe must have a type of OpTypePipe with ReadOnly or WriteOnly access qualifier.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
       "Category": "Pipe",
       "Capabilities": [
         "Capability"
@@ -9123,8 +9393,8 @@
     },
     {
       "Name": "OpGroupReserveReadPipePackets",
-      "Description": "<a id=\"OpGroupReserveReadPipePackets\"></a><strong>OpGroupReserveReadPipePackets</strong><br />\n<br />\nReserve <em>Num Packets</em> entries for reading from the pipe object specified by <em>Pipe</em> at group level. Result is a valid reservation id if the reservation is successful.<br />\n<br />\nThe reserved pipe entries are referred to by indices that go from 0 &#8230; <em>Num Packets</em> - 1.<br />\n<br />\nAll <a href=\"#Invocation\">invocations</a> of this module within <em>Execution</em> must reach this point of execution.<br />\n<br />\nThis instruction is only guaranteed to work correctly if placed strictly within <a href=\"#UniformControlFlow\">uniform control flow</a> within <em>Execution</em>. This ensures that if any invocation executes it, all invocations will execute it. If placed elsewhere, an invocation may stall indefinitely.<br />\n<br />\n<em>Result Type</em> must be an <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Execution</em> must be <strong>Workgroup</strong> or <strong>Subgroup</strong> <a href=\"#Scope_-id-\"><em>Scope</em></a>.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Num Packets</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as unsigned value.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
-      "DescriptionPlain": "OpGroupReserveReadPipePackets\n\nReserve Num Packets entries for reading from the pipe object specified by Pipe at group level. Result is a valid reservation id if the reservation is successful.\n\nThe reserved pipe entries are referred to by indices that go from 0 &#8230; Num Packets - 1.\n\nAll invocations of this module within Execution must reach this point of execution.\n\nThis instruction is only guaranteed to work correctly if placed strictly within uniform control flow within Execution. This ensures that if any invocation executes it, all invocations will execute it. If placed elsewhere, an invocation may stall indefinitely.\n\nResult Type must be an OpTypeReserveId.\n\nExecution must be Workgroup or Subgroup Scope.\n\nPipe must have a type of OpTypePipe with ReadOnly access qualifier.\n\nNum Packets must be a 32-bit integer type scalar, which is treated as unsigned value.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
+      "Description": "<a id=\"OpGroupReserveReadPipePackets\"></a><strong>OpGroupReserveReadPipePackets</strong><br />\n<br />\nReserve <em>Num Packets</em> entries for reading from the pipe object specified by <em>Pipe</em> at group level. Result is a valid reservation id if the reservation is successful.<br />\n<br />\nThe reserved pipe entries are referred to by indices that go from 0 &#8230; <em>Num Packets</em> - 1.<br />\n<br />\nAll <a href=\"#Invocation\">invocations</a> of this module within <em>Execution</em> must reach this point of execution.<br />\n<br />\nThis instruction is only guaranteed to work correctly if placed strictly within <a href=\"#UniformControlFlow\">uniform control flow</a> within <em>Execution</em>. This ensures that if any invocation executes it, all invocations will execute it. If placed elsewhere, an invocation may stall indefinitely.<br />\n<br />\n<em>Result Type</em> must be an <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Execution</em> must be <strong>Workgroup</strong> or <strong>Subgroup</strong> <a href=\"#Scope_-id-\"><em>Scope</em></a>.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>ReadOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Num Packets</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
+      "DescriptionPlain": "OpGroupReserveReadPipePackets\n\nReserve Num Packets entries for reading from the pipe object specified by Pipe at group level. Result is a valid reservation id if the reservation is successful.\n\nThe reserved pipe entries are referred to by indices that go from 0 &#8230; Num Packets - 1.\n\nAll invocations of this module within Execution must reach this point of execution.\n\nThis instruction is only guaranteed to work correctly if placed strictly within uniform control flow within Execution. This ensures that if any invocation executes it, all invocations will execute it. If placed elsewhere, an invocation may stall indefinitely.\n\nResult Type must be an OpTypeReserveId.\n\nExecution must be Workgroup or Subgroup Scope.\n\nPipe must have a type of OpTypePipe with ReadOnly access qualifier.\n\nNum Packets must be a 32-bit integer type scalar, which is treated as an unsigned value.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
       "Category": "Pipe",
       "Capabilities": [
         "Capability"
@@ -9168,8 +9438,8 @@
     },
     {
       "Name": "OpGroupReserveWritePipePackets",
-      "Description": "<a id=\"OpGroupReserveWritePipePackets\"></a><strong>OpGroupReserveWritePipePackets</strong><br />\n<br />\nReserve <em>Num Packets</em> entries for writing to the pipe object specified by <em>Pipe</em> at group level. Result is a valid reservation ID if the reservation is successful.<br />\n<br />\nThe reserved pipe entries are referred to by indices that go from 0 &#8230; <em>Num Packets</em> - 1.<br />\n<br />\nAll <a href=\"#Invocation\">invocations</a> of this module within <em>Execution</em> must reach this point of execution.<br />\n<br />\nThis instruction is only guaranteed to work correctly if placed strictly within <a href=\"#UniformControlFlow\">uniform control flow</a> within <em>Execution</em>. This ensures that if any invocation executes it, all invocations will execute it. If placed elsewhere, an invocation may stall indefinitely.<br />\n<br />\n<em>Result Type</em> must be an <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Execution</em> must be <strong>Workgroup</strong> or <strong>Subgroup</strong> <a href=\"#Scope_-id-\"><em>Scope</em></a>.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Num Packets</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as unsigned value.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
-      "DescriptionPlain": "OpGroupReserveWritePipePackets\n\nReserve Num Packets entries for writing to the pipe object specified by Pipe at group level. Result is a valid reservation ID if the reservation is successful.\n\nThe reserved pipe entries are referred to by indices that go from 0 &#8230; Num Packets - 1.\n\nAll invocations of this module within Execution must reach this point of execution.\n\nThis instruction is only guaranteed to work correctly if placed strictly within uniform control flow within Execution. This ensures that if any invocation executes it, all invocations will execute it. If placed elsewhere, an invocation may stall indefinitely.\n\nResult Type must be an OpTypeReserveId.\n\nExecution must be Workgroup or Subgroup Scope.\n\nPipe must have a type of OpTypePipe with WriteOnly access qualifier.\n\nNum Packets must be a 32-bit integer type scalar, which is treated as unsigned value.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
+      "Description": "<a id=\"OpGroupReserveWritePipePackets\"></a><strong>OpGroupReserveWritePipePackets</strong><br />\n<br />\nReserve <em>Num Packets</em> entries for writing to the pipe object specified by <em>Pipe</em> at group level. Result is a valid reservation ID if the reservation is successful.<br />\n<br />\nThe reserved pipe entries are referred to by indices that go from 0 &#8230; <em>Num Packets</em> - 1.<br />\n<br />\nAll <a href=\"#Invocation\">invocations</a> of this module within <em>Execution</em> must reach this point of execution.<br />\n<br />\nThis instruction is only guaranteed to work correctly if placed strictly within <a href=\"#UniformControlFlow\">uniform control flow</a> within <em>Execution</em>. This ensures that if any invocation executes it, all invocations will execute it. If placed elsewhere, an invocation may stall indefinitely.<br />\n<br />\n<em>Result Type</em> must be an <a href=\"#OpTypeReserveId\"><strong>OpTypeReserveId</strong></a>.<br />\n<br />\n<em>Execution</em> must be <strong>Workgroup</strong> or <strong>Subgroup</strong> <a href=\"#Scope_-id-\"><em>Scope</em></a>.<br />\n<br />\n<em>Pipe</em> must have a type of <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a> with <strong>WriteOnly</strong> <a href=\"#Access_Qualifier\"><em>access qualifier</em></a>.<br />\n<br />\n<em>Num Packets</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar, which is treated as an unsigned value.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.",
+      "DescriptionPlain": "OpGroupReserveWritePipePackets\n\nReserve Num Packets entries for writing to the pipe object specified by Pipe at group level. Result is a valid reservation ID if the reservation is successful.\n\nThe reserved pipe entries are referred to by indices that go from 0 &#8230; Num Packets - 1.\n\nAll invocations of this module within Execution must reach this point of execution.\n\nThis instruction is only guaranteed to work correctly if placed strictly within uniform control flow within Execution. This ensures that if any invocation executes it, all invocations will execute it. If placed elsewhere, an invocation may stall indefinitely.\n\nResult Type must be an OpTypeReserveId.\n\nExecution must be Workgroup or Subgroup Scope.\n\nPipe must have a type of OpTypePipe with WriteOnly access qualifier.\n\nNum Packets must be a 32-bit integer type scalar, which is treated as an unsigned value.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.",
       "Category": "Pipe",
       "Capabilities": [
         "Capability"
@@ -9281,6 +9551,72 @@
         },
         {
           "Name": "PacketAlignment",
+          "Type": "ID"
+        }
+      ]
+    },
+    {
+      "Name": "OpConstantPipeStorage",
+      "Description": "<a id=\"OpConstantPipeStorage\"></a><strong>OpConstantPipeStorage</strong><br />\n<br />\nCreates a pipe-storage object.<br />\n<br />\n<em>Result Type</em> must be <a href=\"#OpTypePipeStorage\"><strong>OpTypePipeStorage</strong></a>.<br />\n<br />\n<em>Packet Size</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that represents the size in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Alignment</em> must be a 32-bit <a href=\"#Integer\"><em>integer type</em></a> scalar that presents the alignment in bytes of each packet in the pipe.<br />\n<br />\n<em>Packet Size</em> and <em>Packet Alignment</em> must satisfy the following: <br />\n - 1 &lt;= <em>Packet Alignment</em> &lt;= <em>Packet Size</em>. <br />\n - <em>Packet Alignment</em> must evenly divide <em>Packet Size</em><br />\n<br />\nFor concrete types, <em>Packet Alignment</em> should equal <em>Packet Size</em>.  For aggregate types, <em>Packet Alignment</em> should be the size of the largest primitive type in the hierarchy of types.<br />\n<br />\n<em>Capacity</em> is the minimum number of <em>Packet Size</em> blocks the resulting <a href=\"#OpTypePipeStorage\"><strong>OpTypePipeStorage</strong></a> can hold.",
+      "DescriptionPlain": "OpConstantPipeStorage\n\nCreates a pipe-storage object.\n\nResult Type must be OpTypePipeStorage.\n\nPacket Size must be a 32-bit integer type scalar that represents the size in bytes of each packet in the pipe.\n\nPacket Alignment must be a 32-bit integer type scalar that presents the alignment in bytes of each packet in the pipe.\n\nPacket Size and Packet Alignment must satisfy the following: \n - 1 &lt;= Packet Alignment &lt;= Packet Size. \n - Packet Alignment must evenly divide Packet Size\n\nFor concrete types, Packet Alignment should equal Packet Size.  For aggregate types, Packet Alignment should be the size of the largest primitive type in the hierarchy of types.\n\nCapacity is the minimum number of Packet Size blocks the resulting OpTypePipeStorage can hold.",
+      "Category": "Pipe",
+      "Capabilities": [
+        "Capability"
+      ],
+      "WordCount": "6",
+      "WordCountFix": 6,
+      "OpCode": 323,
+      "HasVariableWordCount": false,
+      "HasResult": true,
+      "HasResultType": true,
+      "Operands": [
+        {
+          "Name": "ResultType",
+          "Type": "ID"
+        },
+        {
+          "Name": "Result",
+          "Type": "ID"
+        },
+        {
+          "Name": "PacketSize",
+          "Type": "LiteralNumber"
+        },
+        {
+          "Name": "PacketAlignment",
+          "Type": "LiteralNumber"
+        },
+        {
+          "Name": "Capacity",
+          "Type": "LiteralNumber"
+        }
+      ]
+    },
+    {
+      "Name": "OpCreatePipeFromPipeStorage",
+      "Description": "<a id=\"OpCreatePipeFromPipeStorage\"></a><strong>OpCreatePipeFromPipeStorage</strong><br />\n<br />\nCreates a pipe object from a pipe-storage object.<br />\n<br />\n<em>Result Type</em> must be <a href=\"#OpTypePipe\"><strong>OpTypePipe</strong></a>.<br />\n<br />\n<em>Pipe Storage</em> must be a pipe-storage object created from <a href=\"#OpConstantPipeStorage\"><strong>OpConstantPipeStorage</strong></a>.<br />\n<br />\n<em>Qualifier</em> is the pipe access qualifier.",
+      "DescriptionPlain": "OpCreatePipeFromPipeStorage\n\nCreates a pipe object from a pipe-storage object.\n\nResult Type must be OpTypePipe.\n\nPipe Storage must be a pipe-storage object created from OpConstantPipeStorage.\n\nQualifier is the pipe access qualifier.",
+      "Category": "Pipe",
+      "Capabilities": [
+        "Capability"
+      ],
+      "WordCount": "4",
+      "WordCountFix": 4,
+      "OpCode": 324,
+      "HasVariableWordCount": false,
+      "HasResult": true,
+      "HasResultType": true,
+      "Operands": [
+        {
+          "Name": "ResultType",
+          "Type": "ID"
+        },
+        {
+          "Name": "Result",
+          "Type": "ID"
+        },
+        {
+          "Name": "PipeStorage",
           "Type": "ID"
         }
       ]
@@ -9750,6 +10086,48 @@
           "CommentPlain": "",
           "Capabilities": [],
           "ExtraOperands": []
+        },
+        {
+          "Value": 33,
+          "Name": "Kernel",
+          "Comment": "",
+          "CommentPlain": "",
+          "Capabilities": [],
+          "ExtraOperands": []
+        },
+        {
+          "Value": 34,
+          "Name": "Kernel",
+          "Comment": "",
+          "CommentPlain": "",
+          "Capabilities": [],
+          "ExtraOperands": []
+        },
+        {
+          "Value": 35,
+          "Name": "SubgroupDispatch",
+          "Comment": "",
+          "CommentPlain": "",
+          "Capabilities": [],
+          "ExtraOperands": [
+            {
+              "Type": "LiteralNumber",
+              "Comment": "Subgroup Size"
+            }
+          ]
+        },
+        {
+          "Value": 36,
+          "Name": "SubgroupDispatch",
+          "Comment": "",
+          "CommentPlain": "",
+          "Capabilities": [],
+          "ExtraOperands": [
+            {
+              "Type": "LiteralNumber",
+              "Comment": "Subgroups Per Workgroup"
+            }
+          ]
         }
       ],
       "Comment": "Declare the modes an <a href=\"#EntryPoint\">entry point</a> will execute in.\nUsed by <a href=\"#OpExecutionMode\"><strong>OpExecutionMode</strong></a>.",
@@ -10940,8 +11318,8 @@
         {
           "Value": 1,
           "Name": "Shader",
-          "Comment": "",
-          "CommentPlain": "",
+          "Comment": "trong>Kernel</strong>",
+          "CommentPlain": ", Kernel",
           "Capabilities": [],
           "ExtraOperands": [
             {
@@ -11369,6 +11747,19 @@
             {
               "Type": "LiteralNumber",
               "Comment": "Alignment"
+            }
+          ]
+        },
+        {
+          "Value": 45,
+          "Name": "Addresses",
+          "Comment": "",
+          "CommentPlain": "",
+          "Capabilities": [],
+          "ExtraOperands": [
+            {
+              "Type": "LiteralNumber",
+              "Comment": "Max Byte Offset"
             }
           ]
         }
@@ -11830,6 +12221,22 @@
           "Name": "DontUnroll",
           "Comment": "Strong request, to the extent possible, to keep this loop as a loop, without unrolling.",
           "CommentPlain": "Strong request, to the extent possible, to keep this loop as a loop, without unrolling.",
+          "Capabilities": [],
+          "ExtraOperands": []
+        },
+        {
+          "Value": 4,
+          "Name": "DependencyInfinite",
+          "Comment": "Guarantees that there are no dependencies between loop iterations.",
+          "CommentPlain": "Guarantees that there are no dependencies between loop iterations.",
+          "Capabilities": [],
+          "ExtraOperands": []
+        },
+        {
+          "Value": 8,
+          "Name": "DependencyLength",
+          "Comment": "Guarantees that there are no dependencies between a number of loop iterations,specified as a subsequent literal-number operand to the instruction.",
+          "CommentPlain": "Guarantees that there are no dependencies between a number of loop iterations,specified as a subsequent literal-number operand to the instruction.",
           "Capabilities": [],
           "ExtraOperands": []
         }
