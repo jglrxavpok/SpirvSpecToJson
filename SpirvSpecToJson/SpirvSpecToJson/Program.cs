@@ -24,11 +24,11 @@ namespace SpirvSpecToJson
             const string specExtUrlOpenCL12 = @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.12.html";
             const string specExtUrlOpenCL20 = @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.20.html";
             const string specExtUrlOpenCL21 = @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.21.html";
-            const string cacheFile = "spirv.html";
-            const string cacheFileExtGLSL = "spirvExtGLSL.html";
-            const string cacheFileExtOpenCL12 = "spirvExtOpenCL12.html";
-            const string cacheFileExtOpenCL20 = "spirvExtOpenCL20.html";
-            const string cacheFileExtOpenCL21 = "spirvExtOpenCL21.html";
+            const string cacheFile = "generated/spirv.html";
+            const string cacheFileExtGLSL = "generated/spirvExtGLSL.html";
+            const string cacheFileExtOpenCL12 = "generated/spirvExtOpenCL12.html";
+            const string cacheFileExtOpenCL20 = "generated/spirvExtOpenCL20.html";
+            const string cacheFileExtOpenCL21 = "generated/spirvExtOpenCL21.html";
             const string jsonFile = "generated/spirv.json";
 
 
@@ -41,6 +41,7 @@ namespace SpirvSpecToJson
                 {specExtUrlOpenCL21, cacheFileExtOpenCL21}
             };
 
+            System.IO.Directory.CreateDirectory("generated");
             // download on demand
             //TODO: Only download what needed
             if (!File.Exists(cacheFile) || !File.Exists(cacheFileExtGLSL) || !File.Exists(cacheFileExtOpenCL12) || !File.Exists(cacheFileExtOpenCL20) || !File.Exists(cacheFileExtOpenCL21))
@@ -1295,7 +1296,6 @@ namespace SpirvSpecToJson
 
             // save json
             Console.WriteLine("Writing result json");
-            System.IO.Directory.CreateDirectory("generated");
             File.WriteAllText(jsonFile, specJson.ToString(Formatting.Indented));
         }
     }
