@@ -193,7 +193,14 @@ namespace SpirvSpecToJson
 
 
                                 // Result
-                                if (text == "Result <id>")
+                                if (text.Contains("Optional"))
+                                {
+                                    var a = text.GetLinkedNameAndType(true, true);
+                                    operand["Name"] = a[0] == "[Bias]" ? "Bias" : a[0];
+                                    operand["Type"] = a[1];
+                                    operands.Add(operand);
+                                }
+                                else if (text == "Result <id>")
                                 {
                                     hasResult = true;
                                     operand["Name"] = text.GetName(true);
@@ -246,15 +253,6 @@ namespace SpirvSpecToJson
                                     }
                                     operands.Add(operand);
                                 }
-                                // Optionals
-                                else if (text.Contains("Optional"))
-                                {
-                                    var a = text.GetLinkedNameAndType(true, true);
-                                    operand["Name"] = a[0] == "[Bias]" ? "Bias" : a[0];
-                                    operand["Type"] = "ID?";
-                                    operands.Add(operand);
-                                }
-
                             }
                             opJson["HasResult"] = hasResult;
                             opJson["HasResultType"] = hasResultType;

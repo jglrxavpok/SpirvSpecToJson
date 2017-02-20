@@ -90,6 +90,16 @@ namespace SpirvSpecToJson
 
         }
 
+        private static String HandleSpecialTypes(string text)
+        {
+            switch(text)
+            {
+                case "<id>,<id>,…":
+                    return "ID[]";
+            }
+            return text.Replace("<id>", "ID");
+        }
+
         /// <summary>
         /// Get the type and the name of operands that got a link
         /// 1. Element: Name, 2. Element: Type
@@ -132,10 +142,24 @@ namespace SpirvSpecToJson
                 // text contains "Kernel"
                 
                 var sa = text.Split();
+                if(sa[0] == "Optional")
+                {   
+                    a[0] = "Optional";
+                    a[1] = "";
+                    if (nameToCamelCase)
+                        for (int i = 1; i < sa.Length; i++)
+                            a[1] += sa[i].ToCamelCase();
+                    else
+                        for (int i = 1; i < sa.Length; i++)
+                            a[1] += sa[i];
+                    a[1] = HandleSpecialTypes(a[1]);
+                    a[1] += "?";
+                    return a;
+                }
 
                 if (!text.Contains("Kernel"))
                 {
-                    //Debug.Assert(sa.Length > 2);
+                    Debug.Assert(sa.Length >= 2);
 
                     a[1] = typeToCamelCase ? sa[0].ToCamelCase() + sa[1].ToCamelCase() : sa[0] + sa[1];
 
@@ -150,7 +174,7 @@ namespace SpirvSpecToJson
                 }
                 else
                 {
-                    Debug.Assert(sa.Length > 3);
+                    Debug.Assert(sa.Length >= 3);
 
                     a[1] = typeToCamelCase ? sa[0].ToCamelCase() + sa[1].ToCamelCase() + sa[2].ToCamelCase() : sa[0] + sa[1] + sa[2];
                     
@@ -161,6 +185,7 @@ namespace SpirvSpecToJson
                         for (int i = 3; i < sa.Length; i++)
                             a[0] += sa[i];
                 }
+
             }
             return a;
         }

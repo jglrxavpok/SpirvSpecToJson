@@ -113,12 +113,12 @@
           "Type": "LiteralNumber"
         },
         {
-          "Name": "File",
-          "Type": "ID?"
+          "Name": "Optional",
+          "Type": "IDFile?"
         },
         {
-          "Name": "StringSource",
-          "Type": "OptionalLiteral"
+          "Name": "Optional",
+          "Type": "LiteralStringSource?"
         }
       ]
     },
@@ -550,8 +550,8 @@
           "Type": "ExecutionMode"
         },
         {
-          "Name": "SeeExecutionMode",
-          "Type": "OptionalLiteral(s)"
+          "Name": "Optional",
+          "Type": "Literal(s)SeeExecutionMode?"
         }
       ]
     },
@@ -764,8 +764,8 @@
           "Type": "ImageFormat"
         },
         {
-          "Name": "Qualifier",
-          "Type": "OptionalAccess"
+          "Name": "Optional",
+          "Type": "AccessQualifier?"
         }
       ]
     },
@@ -1458,8 +1458,8 @@
           "Type": "StorageClass"
         },
         {
-          "Name": "Initializer",
-          "Type": "ID?"
+          "Name": "Optional",
+          "Type": "IDInitializer?"
         }
       ]
     },
@@ -1524,8 +1524,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Access",
-          "Type": "OptionalMemory"
+          "Name": "Optional",
+          "Type": "MemoryAccess?"
         }
       ]
     },
@@ -1551,8 +1551,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Access",
-          "Type": "OptionalMemory"
+          "Name": "Optional",
+          "Type": "MemoryAccess?"
         }
       ]
     },
@@ -1578,8 +1578,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Access",
-          "Type": "OptionalMemory"
+          "Name": "Optional",
+          "Type": "MemoryAccess?"
         }
       ]
     },
@@ -1611,8 +1611,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Access",
-          "Type": "OptionalMemory"
+          "Name": "Optional",
+          "Type": "MemoryAccess?"
         }
       ]
     },
@@ -1976,12 +1976,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2023,8 +2023,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2064,12 +2064,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2117,8 +2117,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2154,12 +2154,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2203,8 +2203,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2244,12 +2244,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2297,8 +2297,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2332,12 +2332,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2377,12 +2377,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2422,12 +2422,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2461,12 +2461,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2496,12 +2496,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2775,12 +2775,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2824,8 +2824,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2865,12 +2865,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2918,8 +2918,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -2955,12 +2955,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -3004,8 +3004,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -3045,12 +3045,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -3098,8 +3098,8 @@
           "Type": "ID"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -3135,12 +3135,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -3180,12 +3180,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -3225,12 +3225,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
@@ -3295,12 +3295,12 @@
           "Type": "ID"
         },
         {
-          "Name": "Operands",
-          "Type": "OptionalImage"
+          "Name": "Optional",
+          "Type": "ImageOperands?"
         },
         {
-          "Name": "Optionals",
-          "Type": "ID[]"
+          "Name": "Optional",
+          "Type": "ID[]?"
         }
       ]
     },
