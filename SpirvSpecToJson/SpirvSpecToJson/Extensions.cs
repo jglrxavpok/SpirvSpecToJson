@@ -85,6 +85,13 @@ namespace SpirvSpecToJson
                 a[1] = "LiteralNumber[]";
 
             }
+            else if(text.Contains("Literal, Literal"))
+            {
+                var lines = text.Split();
+                var name = lines[lines.Length - 1];
+                a[0] = name.Replace(" ", "");
+                a[1] = "Literal[]";
+            }
 
             return a;
 
@@ -111,7 +118,7 @@ namespace SpirvSpecToJson
         /// 2. Element: Type</returns>
         public static string[] GetLinkedNameAndType(this string text, bool nameToCamelCase, bool typeToCamelCase)
         {
-            var a = new string[2];
+            var a = new string[] { "", "" } ;
 
             // Enums 
             if (!text.Contains("\n"))
@@ -142,50 +149,30 @@ namespace SpirvSpecToJson
                 // text contains "Kernel"
                 
                 var sa = text.Split();
+                if(nameToCamelCase)
+                {
+                    for (int i = 0;i<sa.Length;i++)
+                    {
+                        sa[i] = sa[i].ToCamelCase();
+                    }
+                }
                 if(sa[0] == "Optional")
                 {   
                     a[0] = "Optional";
-                    a[1] = "";
-                    if (nameToCamelCase)
-                        for (int i = 1; i < sa.Length; i++)
-                            a[1] += sa[i].ToCamelCase();
-                    else
-                        for (int i = 1; i < sa.Length; i++)
-                            a[1] += sa[i];
+                    for (int i = 1; i < sa.Length; i++)
+                        a[1] += sa[i];
                     a[1] = HandleSpecialTypes(a[1]);
                     a[1] += "?";
                     return a;
                 }
+                Debug.Assert(sa.Length >= 2);
 
-                if (!text.Contains("Kernel"))
+                for (int i = 0;i<sa.Length-1;i++)
                 {
-                    Debug.Assert(sa.Length >= 2);
-
-                    a[1] = typeToCamelCase ? sa[0].ToCamelCase() + sa[1].ToCamelCase() : sa[0] + sa[1];
-
-                    a[1] = sa[0].ToCamelCase() + sa[1].ToCamelCase();
-
-                    if(nameToCamelCase)
-                        for (int i = 2; i < sa.Length; i++)
-                            a[0] += sa[i].ToCamelCase();
-                    else
-                        for (int i = 2; i < sa.Length; i++)
-                            a[0] += sa[i];
+                    a[1] += sa[i];
                 }
-                else
-                {
-                    Debug.Assert(sa.Length >= 3);
-
-                    a[1] = typeToCamelCase ? sa[0].ToCamelCase() + sa[1].ToCamelCase() + sa[2].ToCamelCase() : sa[0] + sa[1] + sa[2];
-                    
-                    if (nameToCamelCase)
-                        for (int i = 3; i < sa.Length; i++)
-                            a[0] += sa[i].ToCamelCase();
-                    else
-                        for (int i = 3; i < sa.Length; i++)
-                            a[0] += sa[i];
-                }
-
+                a[1] = HandleSpecialTypes(a[1]);
+                a[0] = sa[sa.Length-1];
             }
             return a;
         }

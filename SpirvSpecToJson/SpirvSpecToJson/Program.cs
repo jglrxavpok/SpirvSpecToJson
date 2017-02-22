@@ -229,6 +229,12 @@ namespace SpirvSpecToJson
                                     operand["Type"] = "Pair<LiteralNumber,ID>[]";
                                     operands.Add(operand);
                                 }
+                                else if (text.Contains("<id>, literal"))
+                                {
+                                    operand["Name"] = "Targets";
+                                    operand["Type"] = "Pair<ID,LiteralNumber>[]";
+                                    operands.Add(operand);
+                                }
                                 // For variable count of parameters
                                 else if (text.Contains(","))
                                 {
@@ -241,19 +247,14 @@ namespace SpirvSpecToJson
                                 else if (td.InnerHtml.Contains("<a href="))
                                 {
                                     var a = text.GetLinkedNameAndType(true, true);
-                                    if(a[0] == null)
-                                    {
-                                        operand["Name"] = "<null>";
-                                        operand["Type"] = "<null>";
-                                    }
-                                    else
-                                    {
-                                        operand["Name"] = a[0].Replace(".", "");
-                                        operand["Type"] = a[1];
-                                    }
+                                    operand["Name"] = a[0].Replace(".", "");
+                                    operand["Type"] = a[1];
                                     operands.Add(operand);
                                 }
+
+                                operand["Name"] = ((string)operand["Name"]).Replace(".", "");
                             }
+
                             opJson["HasResult"] = hasResult;
                             opJson["HasResultType"] = hasResultType;
                             opJson["Operands"] = operands;
