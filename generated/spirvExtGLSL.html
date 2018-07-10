@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="generator" content="AsciiDoc 8.6.8">
+<meta name="generator" content="AsciiDoc 8.6.9">
 <title>SPIR-V Extended Instructions for GLSL</title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
@@ -1728,7 +1728,7 @@ body {
 <div id="header">
 <h1>SPIR-V Extended Instructions for GLSL</h1>
 <span id="author">John Kessenich, Google</span><br>
-<span id="revnumber">version 1.00, Revision 4</span>
+<span id="revnumber">version 1.00, Revision 6</span>
 </div>
 <div id="content">
 <div id="preamble">
@@ -2599,7 +2599,7 @@ Result is the fractional part of <em>x</em> and stores through <em>i</em> the wh
 <br>
 The operand <em>i</em> must have a pointer type.<br>
 <br>
-<em>Result Type</em>, the type of <em>x</em>, and the type <em>i</em> points to must all be the same type Results are computed per component.</p></td>
+<em>Result Type</em>, the type of <em>x</em>, and the type <em>i</em> points to must all be the same type. Results are computed per component.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" ><p class="tableblock">35</p></td>
@@ -3279,7 +3279,7 @@ width:100%;
 <tr>
 <td class="tableblock halign-left valign-top" colspan="2" ><p class="tableblock"><strong>UnpackHalf2x16</strong><br>
 <br>
-Result is the two-component floating-point vector with components obtained by unpacking a 32-bit unsigned integer into a pair of 16-bit values, interpreting those values as 16-bit floating-point numbers according to the OpenGL Specification, and converting them to 32-bit floating-point values.<br></p>
+Result is the two-component floating-point vector with components obtained by unpacking a 32-bit unsigned integer into a pair of 16-bit values, interpreting those values as 16-bit floating-point numbers according to the OpenGL Specification, and converting them to 32-bit floating-point values. Subnormal numbers are either preserved or flushed to zero, consistently within an implemenation.<br></p>
 <p class="tableblock"> The first component of the vector is obtained from the 16 least-significant bits of <em>v</em>; the second component is obtained from the 16 most-significant bits of <em>v</em>.<br>
 <br>
 The <em>v</em> operand must be a scalar with 32-bit integer type.<br>
@@ -3575,7 +3575,9 @@ Integer least-significant bit.<br>
 <br>
 Results in the bit number of the least-significant 1-bit in the binary representation of <em>Value</em>. If <em>Value</em> is 0, the result is -1.<br>
 <br>
- <em>Result Type</em> and the type of <em>Value</em> must both be integer scalar or integer vector types. <em>Result Type</em> and operand types must have the same number of components with the same component width. Results are computed per component.</p></td>
+ <em>Result Type</em> and the type of <em>Value</em> must both be integer scalar or integer vector types. <em>Result Type</em> and operand types must have the same number of components with the same component width. Results are computed per component.<br>
+<br>
+This instruction is currently limited to 32-bit width components.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" ><p class="tableblock">73</p></td>
@@ -3652,7 +3654,7 @@ Result is the value of the input <em>interpolant</em> sampled at a location insi
 <br>
  This instruction is only valid in the <strong>Fragment</strong> execution model.<br>
 <br>
- <em>Result Type</em> and the type of <em>interpolant</em> must be the same type.<br>
+ <em>Result Type</em> and the type that <em>interpolant</em> points to must be the same type.<br>
 <br>
 Use of this instruction requires declaration of the <strong>InterpolationFunction</strong> capability.</p></td>
 </tr>
@@ -3684,7 +3686,7 @@ Result is the value of the input <em>interpolant</em> variable at the location o
 <br>
 The <em>sample</em> operand must be a scalar 32-bit integer.<br>
 <br>
- <em>Result Type</em> and the type of <em>interpolant</em> must be the same type.<br>
+ <em>Result Type</em> and the type that <em>interpolant</em> points to must be the same type.<br>
 <br>
 Use of this instruction requires declaration of the <strong>InterpolationFunction</strong> capability.</p></td>
 </tr>
@@ -3718,7 +3720,7 @@ Result is the value of the input <em>interpolant</em> variable sampled at an off
 <br>
 The <em>offset</em> operand must be a vector of 2 components of 32-bit floating-point type.<br>
 <br>
- <em>Result Type</em> and the type of <em>interpolant</em> must be the same type.<br>
+ <em>Result Type</em> and the type that <em>interpolant</em> points to must be the same type.<br>
 <br>
 Use of this instruction requires declaration of the <strong>InterpolationFunction</strong> capability.</p></td>
 </tr>
@@ -3949,14 +3951,34 @@ Fix Khronos internal issue #109: be more clear for NMin/NMax: If both operands a
 </li>
 </ul></div>
 </div>
+<div class="sect2">
+<h3 id="_changes_from_version_1_00_revision_4">3.7. Changes from Version 1.00, Revision 4</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Be clear about <strong>UnpackHalf2x16</strong> denorm rules.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_changes_from_version_1_00_revision_5">3.8. Changes from Version 1.00, Revision 5</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Khronos SPIR-V Issue #211: As with <strong>FindSMsb</strong> and <strong>FindUMsb</strong>, <strong>FindILsb</strong> needs 32-bit components.
+</p>
+</li>
+</ul></div>
+</div>
 </div>
 </div>
 </div>
 <div id="footnotes"><hr></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.00, Revision 4<br>
-Last updated 2017-02-14 16:32:17 MST
+Version 1.00, Revision 6<br>
+Last updated 2018-05-09 16:12:49 MDT
 </div>
 </div>
 </body>

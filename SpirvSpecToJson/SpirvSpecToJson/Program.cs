@@ -17,13 +17,13 @@ namespace SpirvSpecToJson
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            const string specUrl = @"https://www.khronos.org/registry/spir-v/specs/1.1/SPIRV.html";
-            const string specExtUrlGLSL = @"https://www.khronos.org/registry/spir-v/specs/1.0/GLSL.std.450.html";
-            const string specExtUrlOpenCL12 = @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.12.html";
-            const string specExtUrlOpenCL20 = @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.20.html";
-            const string specExtUrlOpenCL21 = @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.21.html";
+            string specUrl = SpecsLocator.FindUrlOrDefault(args, "spirv", @"https://www.khronos.org/registry/spir-v/specs/unified1/SPIRV.html");
+            string specExtUrlGLSL = SpecsLocator.FindUrlOrDefault(args, "glsl", @"https://www.khronos.org/registry/spir-v/specs/unified1/GLSL.std.450.html");
+            string specExtUrlOpenCL12 = SpecsLocator.FindUrlOrDefault(args, "opencl12", @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.12.html");
+            string specExtUrlOpenCL20 = SpecsLocator.FindUrlOrDefault(args, "opencl20", @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.20.html");
+            string specExtUrlOpenCL21 = SpecsLocator.FindUrlOrDefault(args, "opencl21", @"https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.std.21.html");
             const string cacheFile = "generated/spirv.html";
             const string cacheFileExtGLSL = "generated/spirvExtGLSL.html";
             const string cacheFileExtOpenCL12 = "generated/spirvExtOpenCL12.html";
